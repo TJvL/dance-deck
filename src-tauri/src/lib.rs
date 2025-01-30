@@ -1,15 +1,16 @@
-use crate::data::{get_song_info, setup};
+use crate::data::{get_tracks, add_track, setup_database};
 use tauri::{generate_context, generate_handler, Builder};
 use tauri_plugin_opener::init;
 
 mod data;
+mod error;
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     Builder::default()
-        .setup(setup)
+        .setup(setup_database)
         .plugin(init())
-        .invoke_handler(generate_handler![get_song_info])
+        .invoke_handler(generate_handler![get_tracks, add_track])
         .run(generate_context!())
         .expect("error while running tauri application");
 }
