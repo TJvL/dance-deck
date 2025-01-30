@@ -13,8 +13,9 @@
     "windows": [
       {
         "title": "dance-deck",
-        "width": 800,
-        "height": 600
+        "center": true,
+        "minWidth": 1024,
+        "minHeight": 768
       }
     ],
     "security": {

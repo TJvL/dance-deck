@@ -7,7 +7,7 @@ const DATABASE_URL: &str = "database.db";
 const MIGRATIONS: EmbeddedMigrations = embed_migrations!("migrations");
 
 pub struct Database {
-    pub connection: Mutex<SqliteConnection>,
+    pub connection: SqliteConnection,
 }
 
 pub fn setup_database(application: &mut App) -> Result<(), Box<dyn std::error::Error>> {
@@ -18,7 +18,7 @@ pub fn setup_database(application: &mut App) -> Result<(), Box<dyn std::error::E
         .expect("database migration failed");
 
     let database = Database {
-        connection: Mutex::new(connection),
+        connection,
     };
     application.manage(Mutex::new(database));
 

@@ -17,6 +17,7 @@ diesel::table! {
 diesel::table! {
     tracks (id) {
         id -> Integer,
+        name -> Text,
         artist_id -> Integer,
         dance_id -> Integer,
         playback_count -> Integer,
