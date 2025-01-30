@@ -1,6 +1,6 @@
-use crate::data::{setup_database};
 use tauri::{generate_context, generate_handler, Builder};
 use tauri_plugin_opener::init;
+use crate::data::setup::setup_database;
 
 mod data;
 mod error;
