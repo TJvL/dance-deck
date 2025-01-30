@@ -1,4 +1,4 @@
-use crate::data::{get_tracks, add_track, setup_database};
+use crate::data::{setup_database};
 use tauri::{generate_context, generate_handler, Builder};
 use tauri_plugin_opener::init;
 
@@ -10,7 +10,7 @@ pub fn run() {
     Builder::default()
         .setup(setup_database)
         .plugin(init())
-        .invoke_handler(generate_handler![get_tracks, add_track])
+        .invoke_handler(generate_handler![])
         .run(generate_context!())
         .expect("error while running tauri application");
 }

@@ -1,0 +1,5 @@
+PRAGMA foreign_keys = OFF;
+
+DROP TABLE IF EXISTS Tracks;
+DROP TABLE IF EXISTS Artists;
+DROP TABLE IF EXISTS Dances;
