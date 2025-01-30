@@ -1,0 +1,22 @@
+<!--
+  Vertical layout:
+  1) Progress bar centered vertically
+  2) Buttons in a row below
+-->
+<div class="flex flex-col items-center justify-center h-full">
+  <!-- Playback progress bar -->
+  <div class="w-full max-w-sm my-2 px-4">
+    <!-- Outer bar -->
+    <div class="bg-gray-300 h-2 rounded">
+      <!-- Inner bar (example: 50% filled) -->
+      <div class="bg-blue-600 h-2 rounded" style="width: 50%"></div>
+    </div>
+  </div>
+
+  <!-- Control buttons: "Last", "Play/Pause", "Next" -->
+  <div class="flex flex-row justify-center space-x-4 my-2">
+    <button class="bg-gray-200 hover:bg-gray-300 px-3 py-1 rounded">Last</button>
+    <button class="bg-gray-200 hover:bg-gray-300 px-3 py-1 rounded">Play/Pause</button>
+    <button class="bg-gray-200 hover:bg-gray-300 px-3 py-1 rounded">Next</button>
+  </div>
+</div>
