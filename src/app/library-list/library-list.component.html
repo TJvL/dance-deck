@@ -1,0 +1,27 @@
+<div class="w-full h-full overflow-auto">
+  <table class="w-full table-auto border-collapse border border-black">
+    <thead class="bg-gray-200 border-b border-black">
+      <tr>
+        <th class="p-2 border-r border-black">Track Name</th>
+        <th class="p-2 border-r border-black">Artist Name</th>
+        <th class="p-2 border-r border-black">Dance Name</th>
+        <th class="p-2">Playback Count</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      @for (track of tracks(); track track.id) {
+        <tr class="border-b border-black">
+          <td class="p-2 border-r border-black">{{ track.trackName }}</td>
+          <td class="p-2 border-r border-black">{{ track.artistName }}</td>
+          <td class="p-2 border-r border-black">{{ track.danceName }}</td>
+          <td class="p-2">{{ track.playbackCount }}</td>
+        </tr>
+      } @empty {
+        <tr class="border-b border-black">
+          <p class="p-2">No tracks to show...</p>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>

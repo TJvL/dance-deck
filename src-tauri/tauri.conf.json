@@ -12,10 +12,9 @@
   "app": {
     "windows": [
       {
-        "title": "dance-deck",
-        "center": true,
-        "minWidth": 1024,
-        "minHeight": 768
+        "title": "Dance Deck",
+        "minWidth": 1280,
+        "minHeight": 1024
       }
     ],
     "security": {
