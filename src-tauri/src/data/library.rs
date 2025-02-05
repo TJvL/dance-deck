@@ -1,11 +1,15 @@
-use std::sync::{Arc, Mutex};
+use crate::data::setup::Database;
+use crate::error::ApplicationError;
+use crate::schema::libraries;
+use crate::schema::libraries::path;
 use diesel::{Insertable, QueryDsl, Queryable, RunQueryDsl, Selectable, SelectableHelper};
 use serde::{Deserialize, Serialize};
-use crate::error::Error;
+use std::fs::read_dir;
+use std::io::ErrorKind;
+use std::sync::{Arc, Mutex};
+use diesel::dsl::count;
 use tauri::{command, AppHandle, State};
 use tauri_plugin_dialog::DialogExt;
-use crate::data::setup::Database;
-use crate::schema::libraries;
 
 #[derive(Deserialize, Serialize, Queryable, Selectable, Insertable)]
 #[diesel(table_name = crate::schema::libraries)]
@@ -24,14 +28,37 @@ pub struct LibraryTrack {
 }
 
 #[command]
-fn initialize_library(application: AppHandle, state: State<'_, Arc<Mutex<Database>>>) -> Result<(), Error> {
-    
-    let path = application.dialog().file().blocking_pick_folder();
+fn initialize_library(
+    application: AppHandle,
+    state: State<'_, Arc<Mutex<Database>>>,
+) -> Result<(), ApplicationError> {
+    let directory_path = application.dialog().file().blocking_pick_folder();
+
+    if let Some(directory_path) = directory_path {
+        let directory = read_dir(directory_path.to_string())?;
+
+        let mut count = 0;
+        for entry in directory {
+            let entry = entry?;
+            count += 1;
+            
+            let file_path = entry.path();
+        }
+        
+        if count == 0 {
+            return Err(ApplicationError::FileSystem(std::io::Error::new(
+                ErrorKind::InvalidInput,
+                "no files processed because the directory is empty",
+            )));
+        }
+    }
 
     let mut database = state
         .lock()
         .expect("database mutex poisoned this is most likely a bug in the application");
-    let results = libraries::table.select(Library::as_select()).load(&mut database.connection);
+    let results = libraries::table
+        .select(Library::as_select())
+        .load(&mut database.connection);
 
     Ok(())
 }
