@@ -2,7 +2,7 @@ use std::sync::{Arc, Mutex};
 use diesel::{Insertable, QueryDsl, Queryable, RunQueryDsl, Selectable, SelectableHelper};
 use serde::{Deserialize, Serialize};
 use crate::error::Error;
-use tauri::{command, App, AppHandle, State};
+use tauri::{command, AppHandle, State};
 use tauri_plugin_dialog::DialogExt;
 use crate::data::setup::Database;
 use crate::schema::libraries;
