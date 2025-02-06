@@ -6,13 +6,15 @@ pub enum ApplicationError {
     #[error(transparent)]
     Database(#[from] diesel::result::Error),
     FileSystem(#[from] std::io::Error),
+    Mp3Tagging(#[from] id3::Error),
 }
 
 impl Display for ApplicationError {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         match self {
-            ApplicationError::Database(error) => write!(f, "database error: {}", error.to_string()),
-            ApplicationError::FileSystem(error) => write!(f, "file system error: {}", error.to_string()),
+            ApplicationError::Database(error) => write!(f, "database error: {}", error),
+            ApplicationError::FileSystem(error) => write!(f, "file system error: {}", error),
+            ApplicationError::Mp3Tagging(error) => write!(f, "MP3 tag error: {}", error),
         }
     }
 }

@@ -7,7 +7,7 @@ use serde::{Deserialize, Serialize};
 use std::fs::read_dir;
 use std::io::ErrorKind;
 use std::sync::{Arc, Mutex};
-use diesel::dsl::count;
+use id3::{Tag, TagLike};
 use tauri::{command, AppHandle, State};
 use tauri_plugin_dialog::DialogExt;
 
@@ -42,13 +42,19 @@ fn initialize_library(
             let entry = entry?;
             count += 1;
             
-            let file_path = entry.path();
+            if entry.path().is_file() {
+                let tag = Tag::read_from_path(entry.path())?;
+                tag.title();
+                tag.artist();
+                tag.get("dance").and_then(|frame| frame.content().text());
+            }
+
         }
         
         if count == 0 {
             return Err(ApplicationError::FileSystem(std::io::Error::new(
                 ErrorKind::InvalidInput,
-                "no files processed because the directory is empty",
+                "no files can be processed because the directory is empty",
             )));
         }
     }
