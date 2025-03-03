@@ -1,1 +1,14 @@
 @import 'tailwindcss';
+
+* {
+    cursor: default;
+    user-select: none;
+}
+
+input, select, textarea {
+    cursor: text !important;
+}
+
+input[readonly] {
+    cursor: default !important;
+}
