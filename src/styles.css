@@ -5,7 +5,7 @@
     user-select: none;
 }
 
-input, select, textarea {
+input[type = "text"], textarea {
     cursor: text !important;
 }
 

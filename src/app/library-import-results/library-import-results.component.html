@@ -1,0 +1,21 @@
+<div class="w-full h-full overflow-auto px-2 py-2 space-x-2">
+  <table class="w-full table-auto border-collapse border border-black">
+    <thead class="bg-gray-200 border-b border-black">
+      <tr>
+        <th class="p-2 border-r border-black">Track Name</th>
+        <th class="p-2 border-r border-black">Artist Name</th>
+        <th class="p-2 border-r border-black">Dance Name</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      @for (track of importResults(); track $index) {
+        <tr class="border-b border-black">
+          <td class="p-2 border-r border-black">{{ track.trackName }}</td>
+          <td class="p-2 border-r border-black">{{ track.artistName }}</td>
+          <td class="p-2 border-r border-black">{{ track.danceName }}</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>

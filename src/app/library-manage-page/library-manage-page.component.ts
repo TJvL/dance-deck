@@ -1,16 +1,14 @@
 import { Component } from '@angular/core';
-import { LibraryListComponent } from '../library-list/library-list.component';
-import { LibrarySearchComponent } from '../library-search/library-search.component';
-import { InformationExtractionConfiguratorComponent } from '../information-extraction-configurator/information-extraction-configurator.component';
+import { LibraryImportFolderComponent } from '../library-import-folder/library-import-folder.component';
 import { LibraryPathConfiguratorComponent } from '../library-path-configurator/library-path-configurator.component';
+import { LibraryImportResultsComponent } from '../library-import-results/library-import-results.component';
 
 @Component({
   selector: 'app-library-manage-page',
   imports: [
-    LibrarySearchComponent,
-    LibraryListComponent,
     LibraryPathConfiguratorComponent,
-    InformationExtractionConfiguratorComponent,
+    LibraryImportFolderComponent,
+    LibraryImportResultsComponent,
   ],
   templateUrl: './library-manage-page.component.html',
   styleUrl: './library-manage-page.component.css',

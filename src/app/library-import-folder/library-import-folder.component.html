@@ -1,0 +1,26 @@
+<div class="flex flex-row items-center w-full h-full px-2 py-2 space-x-2">
+  <label for="library-path">Folder to import</label>
+  <input
+    id="library-path"
+    name="library-path"
+    readonly
+    type="text"
+    placeholder="Path..."
+    class="flex-1 border border-black rounded px-2 py-1"
+  />
+  <button class="bg-gray-200 hover:bg-gray-300 rounded px-3 py-1 ml-2" title="Settings">
+    <fa-icon icon="folder-open" class="fa-fw"></fa-icon>
+  </button>
+  <label for="file-pattern">Filename pattern</label>
+  <input
+    type="text"
+    id="file-pattern"
+    name="file-pattern"
+    value="{dance} - {artist} - {title}"
+    placeholder="Input a pattern"
+    class="border border-black rounded px-2 py-1"
+  />
+  <label for="read-metadata">Read file metadata</label>
+  <input type="checkbox" id="read-metadata" name="read-metadata" checked />
+  <button class="bg-gray-200 hover:bg-gray-300 rounded px-3 py-1 ml-2">Import</button>
+</div>
