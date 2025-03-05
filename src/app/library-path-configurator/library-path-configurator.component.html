@@ -1,14 +1,16 @@
-<div class="flex flex-row items-center w-full h-full px-2 py-2 space-x-2">
-  <label for="library-path">Library root</label>
-  <input
-    id="library-path"
-    name="library-path"
-    readonly
-    type="text"
-    placeholder="Path..."
-    class="flex-1 border border-black rounded px-2 py-1"
-  />
-  <button class="bg-gray-200 hover:bg-gray-300 rounded px-3 py-1 ml-2" title="Settings">
-    <fa-icon icon="folder" class="fa-fw"></fa-icon>
-  </button>
+<div class="flex flex-col w-full h-full px-2 py-2 space-x-2">
+  <div class="flex flex-row items-center w-full space-x-2">
+    <label for="library-path" class="whitespace-nowrap w-40">Library root</label>
+    <input
+      id="library-path"
+      name="library-path"
+      readonly
+      type="text"
+      placeholder="Path..."
+      class="flex-1 border border-black rounded px-2 py-1"
+    />
+    <button class="bg-gray-200 hover:bg-gray-300 rounded px-3 py-1 ml-2" title="Select folder">
+      <fa-icon icon="folder" class="fa-fw"></fa-icon>
+    </button>
+  </div>
 </div>

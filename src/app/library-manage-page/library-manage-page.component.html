@@ -1,3 +1,26 @@
-<app-library-path-configurator></app-library-path-configurator>
-<app-library-import-folder></app-library-import-folder>
-<app-library-import-results></app-library-import-results>
+<div class="fixed top-4 left-4 z-50">
+  <button class="bg-white hover:bg-gray-300 text-black rounded px-3 py-1" title="Go back" (click)="backToPlayback()">
+    <fa-icon icon="arrow-left" class="fa-fw"></fa-icon>
+  </button>
+</div>
+
+<div class="px-[10%]">
+  <div class="flex items-center my-4">
+    <div class="flex-grow border-t border-gray-300"></div>
+    <span class="mx-4 text-gray-500">configure music library root directory</span>
+    <div class="flex-grow border-t border-gray-300"></div>
+  </div>
+  <app-library-path-configurator></app-library-path-configurator>
+
+  <div class="flex items-center my-4">
+    <div class="flex-grow border-t border-gray-300"></div>
+    <span class="mx-4 text-gray-500">import files from a folder to the music library</span>
+    <div class="flex-grow border-t border-gray-300"></div>
+  </div>
+  <app-library-import-folder></app-library-import-folder>
+
+  <div class="flex items-center my-4">
+    <div class="flex-grow border-t border-gray-300"></div>
+  </div>
+  <app-library-import-results></app-library-import-results>
+</div>
