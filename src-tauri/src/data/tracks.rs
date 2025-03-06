@@ -20,7 +20,9 @@ pub struct Track {
 }
 
 #[command]
-pub fn get_all_tracks(state: State<'_, Arc<Mutex<Database>>>) -> Result<Vec<Track>, ApplicationError> {
+pub fn get_all_tracks(
+    state: State<'_, Arc<Mutex<Database>>>,
+) -> Result<Vec<Track>, ApplicationError> {
     let mut database = state
         .lock()
         .expect("database mutex poisoned this is most likely a bug in the application");
@@ -32,7 +34,10 @@ pub fn get_all_tracks(state: State<'_, Arc<Mutex<Database>>>) -> Result<Vec<Trac
 }
 
 #[command]
-pub fn add_track(state: State<'_, Arc<Mutex<Database>>>, track: Track) -> Result<(), ApplicationError> {
+pub fn add_track(
+    state: State<'_, Arc<Mutex<Database>>>,
+    track: Track,
+) -> Result<(), ApplicationError> {
     let mut database = state
         .lock()
         .expect("database mutex poisoned this is most likely a bug in the application");

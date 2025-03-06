@@ -1,0 +1,14 @@
+<div class="fixed top-4 left-4 z-50">
+  <button class="bg-white hover:bg-gray-300 text-black rounded px-3 py-1" title="Go back" (click)="backToPlayback()">
+    <fa-icon [icon]="arrowLeftIcon" class="fa-fw"></fa-icon>
+  </button>
+</div>
+
+<div class="px-[10%]">
+  <div class="flex items-center my-4">
+    <div class="flex-grow border-t border-gray-300"></div>
+    <span class="mx-4 text-gray-500">manage available dances</span>
+    <div class="flex-grow border-t border-gray-300"></div>
+  </div>
+  <app-dance-list></app-dance-list>
+</div>

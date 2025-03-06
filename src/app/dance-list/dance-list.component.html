@@ -1,0 +1,42 @@
+<table class="w-full table-fixed border-collapse border border-black">
+  <thead class="bg-gray-200 border-black">
+    <tr>
+      <th class="p-2 border-r border-black w-1/2">Display Name</th>
+      <th class="p-2 border-r border-black w-1/2">Synonyms</th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (dance of dances(); track dance.displayName) {
+      <tr class="border-b border-black">
+        <td class="p-2 border-r border-black align-top">
+          <div class="flex items-start space-x-2">
+            <input type="text" [(ngModel)]="dance.displayName" class="border rounded w-full px-2 py-1" />
+            <button class="bg-gray-200 hover:bg-gray-300 rounded px-2 py-1" title="Remove Dance">
+              <fa-icon [icon]="trashIcon" class="fa-fw"></fa-icon>
+            </button>
+          </div>
+        </td>
+
+        <td class="p-2 border-r border-black align-top">
+          <div class="flex items-start space-x-2">
+            <input type="text" placeholder="New synonym" class="border rounded w-full px-2 py-1" />
+            <button class="bg-gray-200 hover:bg-gray-300 rounded px-2 py-1" title="Add Synonym">
+              <fa-icon [icon]="plusIcon" class="fa-fw"></fa-icon>
+            </button>
+          </div>
+
+          <div class="mt-2 flex flex-col space-y-2">
+            @for (synonym of dance.synonyms; track synonym) {
+              <div class="flex items-start space-x-2">
+                <input type="text" [(ngModel)]="dance.synonyms[$index]" class="border rounded w-full px-2 py-1" />
+                <button class="bg-gray-200 hover:bg-gray-300 rounded px-2 py-1" title="Remove Synonym">
+                  <fa-icon [icon]="trashIcon" class="fa-fw"></fa-icon>
+                </button>
+              </div>
+            }
+          </div>
+        </td>
+      </tr>
+    }
+  </tbody>
+</table>

@@ -1,8 +1,9 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { TrackControlComponent } from '../track-control/track-control.component';
-import { LibrarySearchComponent } from '../library-search/library-search.component';
+
 import { LibraryListComponent } from '../library-list/library-list.component';
+import { LibrarySearchComponent } from '../library-search/library-search.component';
 import { PopUpMenuComponent } from '../pop-up-menu/pop-up-menu.component';
+import { TrackControlComponent } from '../track-control/track-control.component';
 
 @Component({
   selector: 'app-playback-page',

@@ -1,13 +1,17 @@
 <div class="relative inline-block">
   <button class="bg-gray-200 hover:bg-gray-300 rounded px-3 py-1" title="Settings" (click)="toggleMenu()">
-    <fa-icon icon="bars" class="fa-fw"></fa-icon>
+    <fa-icon [icon]="barsIcon" class="fa-fw"></fa-icon>
   </button>
 
   @if (isMenuOpen) {
     <div class="absolute right-0 top-full mt-2 w-48 bg-white border border-gray-300 shadow-lg z-50">
       <div class="flex items-center px-2 py-2 hover:bg-gray-300 cursor-pointer" (click)="openManageLibrary()">
-        <fa-icon icon="book" class="mr-2"></fa-icon>
+        <fa-icon [icon]="bookIcon" class="mr-2"></fa-icon>
         Manage Library
+      </div>
+      <div class="flex items-center px-2 py-2 hover:bg-gray-300 cursor-pointer" (click)="openManageDances()">
+        <fa-icon [icon]="peopleArrowsIcon" class="mr-2"></fa-icon>
+        Manage Dances
       </div>
     </div>
   }

@@ -1,7 +1,6 @@
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
-import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome';
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faPlay, faPause, faStepBackward, faStepForward } from '@fortawesome/free-solid-svg-icons';
-
 
 @Component({
   selector: 'app-track-control',
@@ -11,14 +10,13 @@ import { faPlay, faPause, faStepBackward, faStepForward } from '@fortawesome/fre
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TrackControlComponent {
-  public playing = signal(false);
-  public trackProgress = signal(0);
+  readonly playIcon = faPlay;
+  readonly pauseIcon = faPause;
+  readonly stepBackwardIcon = faStepBackward;
+  readonly stepForwardIcon = faStepForward;
 
-  private readonly falconLibrary = inject(FaIconLibrary);
-
-  constructor() {
-    this.falconLibrary.addIcons(faPlay, faPause, faStepBackward, faStepForward);
-  }
+  readonly playing = signal(false);
+  readonly trackProgress = signal(0);
 
   togglePlayPause(): void {
     this.playing.update((value) => !value);

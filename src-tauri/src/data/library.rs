@@ -1,13 +1,12 @@
 use crate::data::setup::Database;
 use crate::error::ApplicationError;
 use crate::schema::libraries;
-use crate::schema::libraries::path;
 use diesel::{Insertable, QueryDsl, Queryable, RunQueryDsl, Selectable, SelectableHelper};
+use id3::{Tag, TagLike};
 use serde::{Deserialize, Serialize};
 use std::fs::read_dir;
 use std::io::ErrorKind;
 use std::sync::{Arc, Mutex};
-use id3::{Tag, TagLike};
 use tauri::{command, AppHandle, State};
 use tauri_plugin_dialog::DialogExt;
 
@@ -28,7 +27,7 @@ pub struct LibraryTrack {
 }
 
 #[command]
-fn initialize_library(
+pub fn initialize_library(
     application: AppHandle,
     state: State<'_, Arc<Mutex<Database>>>,
 ) -> Result<(), ApplicationError> {
@@ -41,16 +40,15 @@ fn initialize_library(
         for entry in directory {
             let entry = entry?;
             count += 1;
-            
+
             if entry.path().is_file() {
                 let tag = Tag::read_from_path(entry.path())?;
                 tag.title();
                 tag.artist();
                 tag.get("dance").and_then(|frame| frame.content().text());
             }
-
         }
-        
+
         if count == 0 {
             return Err(ApplicationError::FileSystem(std::io::Error::new(
                 ErrorKind::InvalidInput,

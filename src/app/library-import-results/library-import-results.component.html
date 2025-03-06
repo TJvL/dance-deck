@@ -1,4 +1,11 @@
-<div class="w-full h-full overflow-auto px-2 py-2 space-x-2">
+<div class="flex flex-col w-full h-full px-2 py-2 space-y-4">
+  <div class="flex flex-row items-center justify-center space-x-4">
+    <button class="bg-gray-200 hover:bg-gray-300 rounded px-3 py-1" title="Save the results to the library">
+      Save
+    </button>
+    <button class="bg-gray-200 hover:bg-gray-300 rounded px-3 py-1" title="Abort the library import">Abort</button>
+  </div>
+
   <table class="w-full table-auto border-collapse border border-black">
     <thead class="bg-gray-200 border-b border-black">
       <tr>
@@ -7,13 +14,18 @@
         <th class="p-2 border-r border-black">Dance Name</th>
       </tr>
     </thead>
-
     <tbody>
       @for (track of importResults(); track $index) {
         <tr class="border-b border-black">
-          <td class="p-2 border-r border-black">{{ track.trackName }}</td>
-          <td class="p-2 border-r border-black">{{ track.artistName }}</td>
-          <td class="p-2 border-r border-black">{{ track.danceName }}</td>
+          <td class="p-2 border-r border-black">
+            <input type="text" [(ngModel)]="track.trackName" class="w-full border rounded px-1" />
+          </td>
+          <td class="p-2 border-r border-black">
+            <input type="text" [(ngModel)]="track.artistName" class="w-full border rounded px-1" />
+          </td>
+          <td class="p-2 border-r border-black">
+            <input type="text" [(ngModel)]="track.danceName" class="w-full border rounded px-1" />
+          </td>
         </tr>
       }
     </tbody>

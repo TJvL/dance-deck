@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject, OnInit, signal, WritableSignal } from '@angular/core';
-import TrackModel from '../models/track.model';
+
+import { TrackDto } from '../../data-transfer-objects';
 import { TrackService } from '../services/track.service';
 
 @Component({
@@ -10,7 +11,7 @@ import { TrackService } from '../services/track.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LibraryListComponent implements OnInit {
-  tracks: WritableSignal<readonly TrackModel[]> = signal([]);
+  readonly tracks: WritableSignal<readonly TrackDto[]> = signal([]);
 
   private readonly trackService = inject(TrackService);
 

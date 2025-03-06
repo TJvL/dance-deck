@@ -1,5 +1,5 @@
-use std::fmt::{Display, Formatter};
 use serde::{Serialize, Serializer};
+use std::fmt::{Display, Formatter};
 
 #[derive(Debug, thiserror::Error)]
 pub enum ApplicationError {
@@ -22,7 +22,7 @@ impl Display for ApplicationError {
 impl Serialize for ApplicationError {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
-        S: Serializer
+        S: Serializer,
     {
         serializer.serialize_str(self.to_string().as_ref())
     }

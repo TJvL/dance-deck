@@ -1,5 +1,5 @@
-import { Component, inject } from '@angular/core';
-import { FaIconComponent, FaIconLibrary } from '@fortawesome/angular-fontawesome';
+import { Component } from '@angular/core';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { faFolderOpen } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
@@ -9,9 +9,5 @@ import { faFolderOpen } from '@fortawesome/free-solid-svg-icons';
   styleUrl: './library-import-folder.component.css',
 })
 export class LibraryImportFolderComponent {
-  private readonly faIconLibrary = inject(FaIconLibrary);
-
-  constructor() {
-    this.faIconLibrary.addIcons(faFolderOpen);
-  }
+  readonly folderOpenIcon = faFolderOpen;
 }

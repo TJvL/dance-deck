@@ -6,17 +6,17 @@
   </div>
   <div class="flex flex-row justify-center space-x-4 my-2">
     <button class="bg-gray-200 hover:bg-gray-300 px-3 py-1 rounded">
-      <fa-icon icon="step-backward"></fa-icon>
+      <fa-icon [icon]="stepBackwardIcon"></fa-icon>
     </button>
     <button class="bg-gray-200 hover:bg-gray-300 px-3 py-1 rounded" (click)="togglePlayPause()">
       @if (playing()) {
-        <fa-icon icon="pause"></fa-icon>
+        <fa-icon [icon]="pauseIcon"></fa-icon>
       } @else {
-        <fa-icon icon="play"></fa-icon>
+        <fa-icon [icon]="playIcon"></fa-icon>
       }
     </button>
     <button class="bg-gray-200 hover:bg-gray-300 px-3 py-1 rounded">
-      <fa-icon icon="step-forward"></fa-icon>
+      <fa-icon [icon]="stepForwardIcon"></fa-icon>
     </button>
   </div>
 </div>
