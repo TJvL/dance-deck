@@ -1,10 +1,12 @@
-use crate::data::setup::setup_database;
-use crate::data::tracks::{add_track, get_all_tracks};
-use tauri::{generate_context, generate_handler, Builder};
+use crate::category::add_category;
+use setup::setup_database;
+use tauri::{Builder, generate_context, generate_handler};
 
-mod data;
+mod category;
 mod error;
+mod migration;
 mod schema;
+pub mod setup;
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
@@ -12,7 +14,7 @@ pub fn run() {
         .setup(setup_database)
         .plugin(tauri_plugin_opener::init())
         .plugin(tauri_plugin_dialog::init())
-        .invoke_handler(generate_handler![get_all_tracks, add_track])
+        .invoke_handler(generate_handler![add_category])
         .run(generate_context!())
-        .expect("error while running tauri application");
+        .expect("error while running application");
 }

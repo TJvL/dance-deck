@@ -1,0 +1,26 @@
+<div class="border-l pl-4 my-2">
+  <div class="flex items-center space-x-2">
+    <input type="text" [(ngModel)]="category.name" class="border px-2 py-1 rounded w-60" />
+    <button class="bg-gray-200 hover:bg-gray-300 px-2 py-1 rounded" (click)="removeCategory()">Remove</button>
+  </div>
+
+  <div class="flex items-center space-x-2 mt-2">
+    <input
+      type="text"
+      placeholder="New subcategory"
+      [(ngModel)]="newSubcategoryName"
+      class="border px-2 py-1 rounded w-60"
+    />
+    <button class="bg-gray-200 hover:bg-gray-300 px-2 py-1 rounded" (click)="addSubcategory()">Add</button>
+  </div>
+
+  <div class="mt-2">
+    @for (subCategory of category.subCategories; track subCategory.name) {
+      <app-category-tree-node
+        [category]="subCategory"
+        (onAdd)="onAdd.emit($event)"
+        (onRemove)="onRemove.emit($event)"
+      ></app-category-tree-node>
+    }
+  </div>
+</div>

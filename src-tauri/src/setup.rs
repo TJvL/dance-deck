@@ -1,22 +1,22 @@
+use crate::category::seed_root_category;
+use crate::migration::run_migrations;
 use diesel::{Connection, SqliteConnection};
-use diesel_migrations::{embed_migrations, EmbeddedMigrations, MigrationHarness};
 use std::error::Error;
 use std::sync::Mutex;
 use tauri::{App, Manager};
 
 const DATABASE_URL: &str = "database.db";
-const MIGRATIONS: EmbeddedMigrations = embed_migrations!("migrations");
 
 pub struct Database {
     pub connection: SqliteConnection,
 }
 
 pub fn setup_database(application: &mut App) -> Result<(), Box<dyn Error>> {
-    let mut connection =
-        SqliteConnection::establish(DATABASE_URL).expect("could not access or create database");
-    connection
-        .run_pending_migrations(MIGRATIONS)
-        .expect("database migration failed");
+    let mut connection = SqliteConnection::establish(DATABASE_URL)
+        .expect("could not access or create database file");
+
+    run_migrations(DATABASE_URL);
+    seed_root_category(&mut connection)?;
 
     let database = Database { connection };
     application.manage(Mutex::new(database));

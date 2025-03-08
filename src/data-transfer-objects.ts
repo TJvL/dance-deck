@@ -1,18 +1,19 @@
 export interface ImportedResultDto {
-  trackName: string;
-  artistName: string;
-  danceName: string;
+  trackName?: string;
+  artistName?: string;
+  danceName?: string;
 }
 
 export interface TrackDto {
   id: number;
   trackName: string;
   artistName: string;
-  danceName: string;
+  danceName?: string;
   playbackCount: number;
 }
 
 export interface DanceDto {
   displayName: string;
+  category?: string;
   synonyms: string[];
 }

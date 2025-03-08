@@ -1,7 +1,7 @@
 import { Component, ElementRef, HostListener, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faBars, faBook, faPeopleArrows } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faBook, faPeopleArrows, faList } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-pop-up-menu',
@@ -13,6 +13,7 @@ export class PopUpMenuComponent {
   readonly barsIcon = faBars;
   readonly bookIcon = faBook;
   readonly peopleArrowsIcon = faPeopleArrows;
+  readonly listIcon = faList;
 
   private _isMenuOpen: boolean = false;
 
@@ -35,6 +36,11 @@ export class PopUpMenuComponent {
   async openManageDances() {
     this._isMenuOpen = false;
     await this.router.navigate(['dance-manage-page']);
+  }
+
+  async openManageCategories() {
+    this._isMenuOpen = false;
+    await this.router.navigate(['category-manage-page']);
   }
 
   @HostListener('document:click', ['$event.target'])

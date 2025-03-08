@@ -6,6 +6,7 @@ const angularPlugin = require('@angular-eslint/eslint-plugin');
 const angularTemplateParser = require('@angular-eslint/template-parser');
 const eslintPluginPrettierRecommended = require('eslint-plugin-prettier/recommended');
 const importPlugin = require('eslint-plugin-import');
+const unusedImportsPlugin = require('eslint-plugin-unused-imports');
 
 module.exports = [
   {
@@ -24,6 +25,7 @@ module.exports = [
       '@angular-eslint': angularPlugin,
       prettier: prettierPlugin,
       import: importPlugin,
+      'unused-imports': unusedImportsPlugin,
     },
     rules: {
       ...tsPlugin.configs.recommended.rules,
@@ -56,6 +58,17 @@ module.exports = [
           },
         },
       ],
+      'unused-imports/no-unused-imports': 'error',
+      'unused-imports/no-unused-vars': [
+        'error',
+        {
+          vars: 'all',
+          varsIgnorePattern: '^_',
+          args: 'after-used',
+          argsIgnorePattern: '^_',
+        },
+      ],
+      '@typescript-eslint/no-unused-vars': 'off',
       '@typescript-eslint/no-explicit-any': ['off'],
       '@typescript-eslint/member-ordering': 0,
       '@typescript-eslint/naming-convention': 0,

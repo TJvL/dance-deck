@@ -18,15 +18,20 @@ export class DanceListComponent {
   readonly dances = signal<DanceDto[]>([
     {
       displayName: 'Wals',
+      category: 'Walsen',
       synonyms: ['Wals in 3'],
     },
     {
       displayName: 'Branle Béarnais',
+      category: 'Bretons',
       synonyms: ["Branle de la Vallée d'Ossau", "Branle d'Ossau"],
     },
     {
       displayName: 'Mazurka',
+      category: 'Koppeldansen',
       synonyms: [],
     },
   ]);
+
+  readonly categoryNames = signal<string[]>(['Walsen', 'Bretons', 'Koppeldansen', 'Poitou']);
 }

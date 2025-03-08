@@ -1,30 +1,23 @@
 [package]
 name = "dance-deck"
 version = "0.1.0"
-description = "A Tauri App"
+description = "An application to manage and play dance music"
 authors = ["Thomas Jan van Leeuwen"]
-edition = "2021"
-
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+edition = "2024"
 
 [lib]
-# The `_lib` suffix may seem redundant but it is necessary
-# to make the lib name unique and wouldn't conflict with the bin name.
-# This seems to be only an issue on Windows, see https://github.com/rust-lang/cargo/issues/8519
 name = "dance_deck_lib"
 crate-type = ["staticlib", "cdylib", "rlib"]
 
 [build-dependencies]
-tauri-build = { version = "2", features = [] }
+tauri-build = { version = "2.0.6", features = [] }
 
 [dependencies]
 diesel = { version = "2.2.8", features = ["sqlite"] }
-diesel_migrations = "2.2.0"
 tauri = { version = "2.3.1", features = [] }
-tauri-plugin-opener = "2.2.6"
-thiserror = "2.0.12"
+tauri-plugin-dialog = { version = "2.2.0", features = [] }
+tauri-plugin-opener = { version = "2.2.6", features = [] }
+thiserror = { version = "2.0.12", features = [] }
 serde = { version = "1.0.218", features = ["derive"] }
-serde_json = "1.0.140"
-tauri-plugin-dialog = "2.2.0"
-rodio = { version = "0.20.1", default-features = false, features = ["symphonia-all"] }
-id3 = "1.16.1"
+serde_json = { version = "1.0.140", features = [] }
+refinery = { version = "0.8.16", features = ["rusqlite"] }
