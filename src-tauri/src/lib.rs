@@ -1,4 +1,4 @@
-use crate::category::add_category;
+use crate::category::{add_category, get_all_categories};
 use setup::setup;
 use tauri::{Builder, generate_context, generate_handler};
 
@@ -14,7 +14,7 @@ pub fn run() {
         .setup(setup)
         .plugin(tauri_plugin_opener::init())
         .plugin(tauri_plugin_dialog::init())
-        .invoke_handler(generate_handler![add_category])
+        .invoke_handler(generate_handler![add_category, get_all_categories])
         .run(generate_context!())
         .expect("error while running application");
 }

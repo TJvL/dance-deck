@@ -6,7 +6,7 @@ import { CategoryDto } from './category.dto';
 
 @Injectable()
 export class CategoryService {
-  private readonly tree = signal<CategoryDto>({ id: 1, name: 'Dans', subCategories: [] });
+  private readonly tree = signal<CategoryDto>({ id: 1, parentId: null, name: 'Dans', subCategories: [] });
 
   constructor() {
     listen<CategoryDto>('app://category-create', (event) => event);
