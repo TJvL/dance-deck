@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 
 import { CategoryTreeNodeComponent } from './category-tree-node/category-tree-node.component';
-import { CategoryDto } from './category.dto';
+import { NewCategoryDto } from './category.dto';
 import { CategoryService } from './category.service';
 
 @Component({
@@ -18,11 +18,11 @@ export class CategoryTreeComponent {
     return this.categoryService.rootCategory;
   }
 
-  async addSubcategory({ parent, newName }: { parent: CategoryDto; newName: string }) {
-    await this.categoryService.addCategory(parent, newName);
+  async addSubcategory(newCategoryDto: NewCategoryDto) {
+    await this.categoryService.addCategory(newCategoryDto);
   }
 
-  async removeCategory(_id: number) {}
-
-  async editCategory(_category: CategoryDto) {}
+  async removeSubcategory(id: number) {
+    await this.categoryService.removeCategory(id);
+  }
 }

@@ -7,5 +7,3 @@ CREATE TABLE categories
 );
 
 CREATE INDEX idx_categories_name ON categories (name);
-
-INSERT INTO categories (parent_id, name) VALUES (NULL, 'Dans');

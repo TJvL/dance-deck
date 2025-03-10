@@ -1,20 +1,13 @@
 use serde::{Serialize, Serializer};
-use std::fmt::{Display, Formatter};
 
 #[derive(Debug, thiserror::Error)]
 pub enum ApplicationError {
     #[error(transparent)]
     Database(#[from] diesel::result::Error),
+    #[error(transparent)]
     FileSystem(#[from] std::io::Error),
-}
-
-impl Display for ApplicationError {
-    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        match self {
-            ApplicationError::Database(error) => write!(f, "database error: {}", error),
-            ApplicationError::FileSystem(error) => write!(f, "file system error: {}", error),
-        }
-    }
+    #[error("mutex lock error: {0}")]
+    MutexLock(String),
 }
 
 impl Serialize for ApplicationError {

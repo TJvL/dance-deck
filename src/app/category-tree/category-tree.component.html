@@ -1,6 +1,7 @@
-<app-category-tree-node
-  [category]="rootCategory()"
-  (onAdd)="addSubcategory($event)"
-  (onRemove)="removeCategory($event)"
-  (onEdit)="editCategory($event)"
-></app-category-tree-node>
+@if (rootCategory() != null) {
+  <app-category-tree-node
+    [category]="rootCategory()!"
+    (onAdd)="addSubcategory($event)"
+    (onRemove)="removeSubcategory($event)"
+  ></app-category-tree-node>
+}
