@@ -1,11 +1,16 @@
 import { Injectable, signal } from '@angular/core';
 import { invoke } from '@tauri-apps/api/core';
+import { listen } from '@tauri-apps/api/event';
 
 import { CategoryDto } from './category.dto';
 
 @Injectable()
 export class CategoryService {
-  private readonly tree = signal<CategoryDto>({ id: 1, name: 'Dance', subCategories: [] });
+  private readonly tree = signal<CategoryDto>({ id: 1, name: 'Dans', subCategories: [] });
+
+  constructor() {
+    listen<CategoryDto>('app://category-create', (event) => event);
+  }
 
   get rootCategory() {
     return this.tree.asReadonly();

@@ -1,8 +1,10 @@
-mod embedded {
-    use refinery::embed_migrations;
-    embed_migrations!("./migrations");
-}
+use diesel::SqliteConnection;
+use diesel_migrations::{EmbeddedMigrations, MigrationHarness, embed_migrations};
 
-pub fn run_migrations(database_url: &str) {
-    unimplemented!()
+const MIGRATIONS: EmbeddedMigrations = embed_migrations!("migrations");
+
+pub fn run_migrations(connection: &mut SqliteConnection) {
+    connection
+        .run_pending_migrations(MIGRATIONS)
+        .expect("database migration failed");
 }
