@@ -1,14 +1,14 @@
-use diesel::QueryDsl;
-use diesel::ExpressionMethods;
 use crate::error::ApplicationError;
 use crate::schema::categories::dsl::categories;
+use crate::schema::categories::id;
 use crate::setup::Database;
-use diesel::{delete, Insertable, Queryable, RunQueryDsl};
+use diesel::ExpressionMethods;
+use diesel::QueryDsl;
+use diesel::{Insertable, Queryable, RunQueryDsl, delete};
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
-use std::sync::{Arc, Mutex};
+use std::sync::Mutex;
 use tauri::{State, command};
-use crate::schema::categories::id;
 
 #[derive(Clone, Serialize)]
 pub struct CategoryNode {
@@ -26,7 +26,8 @@ pub struct Category {
     pub name: String,
 }
 
-#[derive(Deserialize, Serialize, Insertable)]
+#[derive(Deserialize, Insertable)]
+#[serde(rename_all = "camelCase")]
 #[diesel(table_name = crate::schema::categories)]
 pub struct NewCategory<'a> {
     pub parent_id: i32,
@@ -72,10 +73,8 @@ pub fn build_category_tree(flat_categories: Vec<Category>) -> Option<CategoryNod
 
 #[command]
 pub fn get_all_categories(
-    state: State<'_, Arc<Mutex<Database>>>,
+    state: State<'_, Mutex<Database>>,
 ) -> Result<Option<CategoryNode>, ApplicationError> {
-    println!("Getting all categories");
-    
     let mut database = state
         .lock()
         .map_err(|poison_error| ApplicationError::MutexLock(poison_error.to_string()))?;
@@ -88,11 +87,9 @@ pub fn get_all_categories(
 
 #[command]
 pub fn add_category(
-    state: State<'_, Arc<Mutex<Database>>>,
+    state: State<'_, Mutex<Database>>,
     new_category: NewCategory,
 ) -> Result<Option<CategoryNode>, ApplicationError> {
-    println!("Adding new category");
-    
     let mut database = state
         .lock()
         .map_err(|poison_error| ApplicationError::MutexLock(poison_error.to_string()))?;
@@ -109,20 +106,17 @@ pub fn add_category(
 
 #[command]
 pub fn remove_category(
-    state: State<'_, Arc<Mutex<Database>>>,
+    state: State<'_, Mutex<Database>>,
     category_id: i32,
 ) -> Result<Option<CategoryNode>, ApplicationError> {
-    println!("Removing category {}", category_id);
-    
     let mut database = state
         .lock()
         .map_err(|e| ApplicationError::MutexLock(e.to_string()))?;
 
-    delete(categories.filter(id.eq(category_id)))
-        .execute(&mut database.connection)?;
+    delete(categories.filter(id.eq(category_id))).execute(&mut database.connection)?;
 
     let category_list = categories.load::<Category>(&mut database.connection)?;
     let category_root = build_category_tree(category_list);
-    
+
     Ok(category_root)
 }

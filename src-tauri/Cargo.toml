@@ -9,6 +9,16 @@ edition = "2024"
 name = "dance_deck_lib"
 crate-type = ["staticlib", "cdylib", "rlib"]
 
+[profile.dev]
+incremental = true
+
+[profile.release]
+codegen-units = 1
+lto = true
+opt-level = 3
+panic = "abort"
+strip = true
+
 [build-dependencies]
 tauri-build = { version = "2.0.6", features = [] }
 
@@ -17,6 +27,7 @@ diesel = { version = "2.2.8", features = ["sqlite"] }
 diesel_migrations = { version = "2.2.0", features = ["sqlite"] }
 tauri = { version = "2.3.1", features = [] }
 tauri-plugin-dialog = { version = "2.2.0", features = [] }
+tauri-plugin-log = { version = "2.3.0", features = ["colored"] }
 tauri-plugin-opener = { version = "2.2.6", features = [] }
 thiserror = { version = "2.0.12", features = [] }
 serde = { version = "1.0.218", features = ["derive"] }

@@ -6,6 +6,6 @@ export interface CategoryDto {
 }
 
 export interface NewCategoryDto {
-  readonly newName: string;
+  readonly name: string;
   readonly parentId: number;
 }

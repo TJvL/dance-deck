@@ -14,6 +14,10 @@ import { CategoryService } from './category.service';
 export class CategoryTreeComponent {
   private readonly categoryService = inject(CategoryService);
 
+  constructor() {
+    this.categoryService.getAllCategories();
+  }
+
   get rootCategory() {
     return this.categoryService.rootCategory;
   }

@@ -23,7 +23,7 @@ export class CategoryService {
   async addCategory(newCategoryDto: NewCategoryDto) {
     try {
       const newRoot = await invoke<CategoryDto>('add_category', {
-        new_category: { new_category: newCategoryDto },
+        newCategory: newCategoryDto,
       });
       this.root.set(newRoot);
     } catch (error) {

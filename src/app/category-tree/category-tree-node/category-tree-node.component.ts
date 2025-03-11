@@ -18,7 +18,7 @@ export class CategoryTreeNodeComponent {
   newSubcategoryName = '';
 
   addSubcategory() {
-    this.onAdd.emit({ newName: this.newSubcategoryName, parentId: this.category.id });
+    this.onAdd.emit({ name: this.newSubcategoryName, parentId: this.category.id });
     this.newSubcategoryName = '';
   }
 

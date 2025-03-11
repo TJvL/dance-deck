@@ -14,6 +14,15 @@ pub fn run() {
         .setup(setup)
         .plugin(tauri_plugin_opener::init())
         .plugin(tauri_plugin_dialog::init())
+        .plugin(
+            tauri_plugin_log::Builder::new()
+                .clear_targets()
+                .targets([
+                    tauri_plugin_log::Target::new(tauri_plugin_log::TargetKind::Stdout),
+                    tauri_plugin_log::Target::new(tauri_plugin_log::TargetKind::Webview),
+                ])
+                .build(),
+        )
         .invoke_handler(generate_handler![
             add_category,
             get_all_categories,
