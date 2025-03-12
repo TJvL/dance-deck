@@ -7,7 +7,6 @@ import { faBars, faBook, faPeopleArrows, faList } from '@fortawesome/free-solid-
   selector: 'app-pop-up-menu',
   imports: [FontAwesomeModule],
   templateUrl: './pop-up-menu.component.html',
-  styleUrl: './pop-up-menu.component.css',
 })
 export class PopUpMenuComponent {
   readonly barsIcon = faBars;

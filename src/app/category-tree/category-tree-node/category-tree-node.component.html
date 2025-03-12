@@ -1,7 +1,9 @@
 <div class="border-l pl-4 my-2">
   <div class="flex items-center space-x-2">
     <input type="text" [value]="category.name" class="border px-2 py-1 rounded w-60" />
-    <button class="bg-gray-200 hover:bg-gray-300 px-2 py-1 rounded" (click)="removeSubcategory()">Remove</button>
+    @if (category.id != 1) {
+      <button class="bg-gray-200 hover:bg-gray-300 px-2 py-1 rounded" (click)="removeSubcategory()">Remove</button>
+    }
   </div>
 
   <div class="flex items-center space-x-2 mt-2">
@@ -15,7 +17,7 @@
   </div>
 
   <div class="mt-2">
-    @for (subCategory of category.subCategories; track subCategory.name) {
+    @for (subCategory of category.childCategories; track subCategory.name) {
       <app-category-tree-node
         [category]="subCategory"
         (onAdd)="onAdd.emit($event)"

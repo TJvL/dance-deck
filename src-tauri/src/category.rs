@@ -5,19 +5,21 @@ use crate::setup::Database;
 use diesel::ExpressionMethods;
 use diesel::QueryDsl;
 use diesel::{Insertable, Queryable, RunQueryDsl, delete};
+use log::info;
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 use std::sync::Mutex;
 use tauri::{State, command};
 
-#[derive(Clone, Serialize)]
+#[derive(Clone, Debug, Serialize)]
+#[serde(rename_all = "camelCase")]
 pub struct CategoryNode {
     pub id: i32,
     pub name: String,
     pub child_categories: Vec<CategoryNode>,
 }
 
-#[derive(Deserialize, Serialize, Queryable)]
+#[derive(Debug, Queryable)]
 #[diesel(table_name = crate::schema::categories)]
 #[diesel(check_for_backend(diesel::sqlite::Sqlite))]
 pub struct Category {
@@ -26,7 +28,7 @@ pub struct Category {
     pub name: String,
 }
 
-#[derive(Deserialize, Insertable)]
+#[derive(Debug, Deserialize, Insertable)]
 #[serde(rename_all = "camelCase")]
 #[diesel(table_name = crate::schema::categories)]
 pub struct NewCategory<'a> {
@@ -34,53 +36,57 @@ pub struct NewCategory<'a> {
     pub name: &'a str,
 }
 
-pub fn build_category_tree(flat_categories: Vec<Category>) -> Option<CategoryNode> {
+pub fn build_category_tree(flat_categories: Vec<Category>) -> CategoryNode {
     let mut node_map: HashMap<i32, (CategoryNode, Option<i32>)> = flat_categories
-        .into_iter()
-        .map(|cat| {
+        .iter()
+        .map(|category| {
             (
-                cat.id,
+                category.id,
                 (
                     CategoryNode {
-                        id: cat.id,
-                        name: cat.name,
+                        id: category.id,
+                        name: category.name.clone(),
                         child_categories: Vec::new(),
                     },
-                    cat.parent_id,
+                    category.parent_id,
                 ),
             )
         })
         .collect();
 
-    let mut root: Option<CategoryNode> = None;
+    let ids: Vec<i32> = node_map.keys().copied().collect();
 
-    for identifier in node_map.clone().keys() {
-        if let Some(&(_, parent_opt)) = node_map.get(identifier) {
-            if let Some(parent_id) = parent_opt {
-                if let Some((child_node, _)) = node_map.remove(identifier) {
-                    if let Some((parent_node, _)) = node_map.get_mut(&parent_id) {
-                        parent_node.child_categories.push(child_node);
-                    }
+    for identifier in ids {
+        if let Some(&(_, Some(parent_id))) = node_map.get(&identifier) {
+            if let Some(child_tuple) = node_map.get(&identifier) {
+                let child_node = child_tuple.0.clone();
+                if let Some((parent_node, _)) = node_map.get_mut(&parent_id) {
+                    parent_node.child_categories.push(child_node);
                 }
-            } else {
-                root = node_map.remove(identifier).map(|(node, _)| node);
             }
         }
     }
 
-    root
+    flat_categories
+        .iter()
+        .find(|cat| cat.parent_id.is_none())
+        .and_then(|cat| node_map.get(&cat.id))
+        .map(|(node, _)| node.clone())
+        .expect("No root category found")
 }
 
 #[command]
 pub fn get_all_categories(
     state: State<'_, Mutex<Database>>,
-) -> Result<Option<CategoryNode>, ApplicationError> {
+) -> Result<CategoryNode, ApplicationError> {
     let mut database = state
         .lock()
         .map_err(|poison_error| ApplicationError::MutexLock(poison_error.to_string()))?;
 
     let category_list = categories.load::<Category>(&mut database.connection)?;
     let category_root = build_category_tree(category_list);
+
+    info!("{:?}", category_root);
 
     Ok(category_root)
 }
@@ -89,7 +95,7 @@ pub fn get_all_categories(
 pub fn add_category(
     state: State<'_, Mutex<Database>>,
     new_category: NewCategory,
-) -> Result<Option<CategoryNode>, ApplicationError> {
+) -> Result<CategoryNode, ApplicationError> {
     let mut database = state
         .lock()
         .map_err(|poison_error| ApplicationError::MutexLock(poison_error.to_string()))?;
@@ -108,7 +114,7 @@ pub fn add_category(
 pub fn remove_category(
     state: State<'_, Mutex<Database>>,
     category_id: i32,
-) -> Result<Option<CategoryNode>, ApplicationError> {
+) -> Result<CategoryNode, ApplicationError> {
     let mut database = state
         .lock()
         .map_err(|e| ApplicationError::MutexLock(e.to_string()))?;
