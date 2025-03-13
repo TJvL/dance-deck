@@ -5,7 +5,6 @@ use crate::setup::Database;
 use diesel::ExpressionMethods;
 use diesel::QueryDsl;
 use diesel::{Insertable, Queryable, RunQueryDsl, delete};
-use log::info;
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 use std::sync::Mutex;
@@ -85,8 +84,6 @@ pub fn get_all_categories(
 
     let category_list = categories.load::<Category>(&mut database.connection)?;
     let category_root = build_category_tree(category_list);
-
-    info!("{:?}", category_root);
 
     Ok(category_root)
 }
