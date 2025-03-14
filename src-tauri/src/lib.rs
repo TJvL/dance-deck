@@ -1,8 +1,8 @@
-use crate::category::{add_category, get_all_categories, remove_category};
+use crate::categories::commands::{add_category, get_all_categories, remove_category};
 use setup::setup;
 use tauri::{Builder, generate_context, generate_handler};
 
-mod category;
+mod categories;
 mod error;
 mod migration;
 mod schema;
@@ -26,7 +26,7 @@ pub fn run() {
         .invoke_handler(generate_handler![
             add_category,
             get_all_categories,
-            remove_category
+            remove_category,
         ])
         .run(generate_context!())
         .expect("error while running application");
