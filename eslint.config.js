@@ -47,6 +47,7 @@ module.exports = [
           style: 'kebab-case',
         },
       ],
+      'no-console': ['warn'],
       'import/order': [
         'error',
         {
