@@ -1,8 +1,9 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 
+import { NewCategoryDto } from '../category.dto';
+import { CategoriesStore } from '../category.store';
+
 import { CategoryTreeNodeComponent } from './category-tree-node/category-tree-node.component';
-import { NewCategoryDto } from './category.dto';
-import { CategoriesStore } from './category.store';
 
 @Component({
   selector: 'app-category-tree',

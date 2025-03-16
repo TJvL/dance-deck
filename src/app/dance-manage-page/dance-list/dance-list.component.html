@@ -17,7 +17,7 @@
       </tr>
     </thead>
     <tbody>
-      @for (dance of dances(); track dance.displayName) {
+      @for (dance of dancesStore.dances(); track dance.displayName) {
         <tr class="border-b border-black">
           <td class="p-2 border-r border-black align-top relative">
             <div class="absolute top-2 -left-12">
@@ -84,7 +84,7 @@
   </table>
 
   <datalist id="categories">
-    @for (categoryName of categoryNames(); track categoryName) {
+    @for (categoryName of categoriesStore.categoryNames(); track categoryName) {
       <option [value]="categoryName"></option>
     }
   </datalist>

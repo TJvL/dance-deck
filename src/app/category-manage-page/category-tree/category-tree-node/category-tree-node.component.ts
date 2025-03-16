@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { CategoryDto, NewCategoryDto } from '../category.dto';
+import { CategoryDto, NewCategoryDto } from '../../category.dto';
 
 @Component({
   selector: 'app-category-tree-node',

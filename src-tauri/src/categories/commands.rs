@@ -59,3 +59,16 @@ pub fn remove_category(
 
     Ok(category_root)
 }
+
+#[command]
+pub fn get_all_category_names(
+    state: State<'_, Mutex<Database>>,
+) -> Result<Vec<String>, ApplicationError> {
+    let mut database = state
+        .lock()
+        .map_err(|e| ApplicationError::MutexLock(e.to_string()))?;
+
+    let category_list = categories.load::<Category>(&mut database.connection)?;
+    
+    Ok(category_list.iter().map(|c| c.name.clone()).collect())
+}

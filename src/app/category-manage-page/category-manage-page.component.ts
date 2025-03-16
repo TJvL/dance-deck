@@ -1,15 +1,15 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 
-import { CategoryTreeComponent } from '../category-tree/category-tree.component';
+import { CategoryTreeComponent } from './category-tree/category-tree.component';
 
 @Component({
   selector: 'app-category-manage-page',
   imports: [FaIconComponent, CategoryTreeComponent],
   templateUrl: './category-manage-page.component.html',
-  styleUrl: './category-manage-page.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CategoryManagePageComponent {
   readonly arrowLeftIcon = faArrowLeft;

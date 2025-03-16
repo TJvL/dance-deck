@@ -11,9 +11,3 @@ export interface TrackDto {
   danceName?: string;
   playbackCount: number;
 }
-
-export interface DanceDto {
-  displayName: string;
-  category?: string;
-  synonyms: string[];
-}

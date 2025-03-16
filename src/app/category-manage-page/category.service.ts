@@ -20,4 +20,8 @@ export class CategoryService {
   async remove(categoryId: number) {
     return await invoke<CategoryDto>('remove_category', { categoryId });
   }
+
+  async getAllNames() {
+    return await invoke<string[]>('get_all_category_names');
+  }
 }

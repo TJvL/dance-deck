@@ -1,8 +1,11 @@
-use crate::categories::commands::{add_category, get_all_categories, remove_category};
+use crate::categories::commands::{
+    add_category, get_all_categories, get_all_category_names, remove_category,
+};
 use setup::setup;
 use tauri::{Builder, generate_context, generate_handler};
 
 mod categories;
+mod dances;
 mod error;
 mod migration;
 mod schema;
@@ -27,6 +30,7 @@ pub fn run() {
             add_category,
             get_all_categories,
             remove_category,
+            get_all_category_names,
         ])
         .run(generate_context!())
         .expect("error while running application");

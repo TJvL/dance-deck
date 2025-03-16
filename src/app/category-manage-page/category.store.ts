@@ -9,12 +9,14 @@ import { CategoryService } from './category.service';
 
 type CategoriesState = {
   rootCategory: CategoryDto | null;
+  categoryNames: string[];
   error: ApplicationErrorDto | null;
   isLoading: boolean;
 };
 
 const initialState: CategoriesState = {
   rootCategory: null,
+  categoryNames: [],
   error: null,
   isLoading: false,
 };
@@ -27,7 +29,8 @@ export const CategoriesStore = signalStore(
       patchState(store, { isLoading: true });
       try {
         const rootCategory = await categoryService.getAll();
-        patchState(store, { rootCategory, isLoading: false });
+        const categoryNames = await categoryService.getAllNames();
+        patchState(store, { rootCategory, categoryNames, isLoading: false });
       } catch (error) {
         patchState(store, {
           error: checkIfKnownError(error),
