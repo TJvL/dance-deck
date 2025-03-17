@@ -1,5 +1,5 @@
 use crate::categories::commands::{
-    add_category, get_all_categories, get_all_category_names, remove_category,
+    add_category, get_all_categories, get_category_root_node, remove_category,
 };
 use setup::setup;
 use tauri::{Builder, generate_context, generate_handler};
@@ -28,9 +28,9 @@ pub fn run() {
         )
         .invoke_handler(generate_handler![
             add_category,
-            get_all_categories,
+            get_category_root_node,
             remove_category,
-            get_all_category_names,
+            get_all_categories,
         ])
         .run(generate_context!())
         .expect("error while running application");

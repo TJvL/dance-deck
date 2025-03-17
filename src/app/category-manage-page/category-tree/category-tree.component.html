@@ -1,6 +1,6 @@
 @if (!categoryStore.isLoading()) {
   <app-category-tree-node
-    [category]="categoryStore.rootCategory()!"
+    [category]="categoryStore.rootCategoryNode()!"
     (onAdd)="addCategory($event)"
     (onRemove)="removeCategory($event)"
   ></app-category-tree-node>

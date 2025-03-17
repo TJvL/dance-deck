@@ -1,8 +1,13 @@
-export interface CategoryDto {
+export interface CategoryNodeDto {
   readonly id: number;
   readonly parentId: number | null;
   readonly name: string;
-  readonly childCategories: readonly CategoryDto[];
+  readonly childCategories: readonly CategoryNodeDto[];
+}
+
+export interface CategoryEntryDto {
+  readonly id: number;
+  readonly name: string;
 }
 
 export interface NewCategoryDto {

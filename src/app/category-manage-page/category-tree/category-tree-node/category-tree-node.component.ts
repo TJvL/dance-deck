@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { CategoryDto, NewCategoryDto } from '../../category.dto';
+import { CategoryNodeDto, NewCategoryDto } from '../../category.dto';
 
 @Component({
   selector: 'app-category-tree-node',
@@ -10,7 +10,7 @@ import { CategoryDto, NewCategoryDto } from '../../category.dto';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CategoryTreeNodeComponent {
-  @Input() category!: CategoryDto;
+  @Input() category!: CategoryNodeDto;
 
   @Output() onAdd = new EventEmitter<NewCategoryDto>();
   @Output() onRemove = new EventEmitter<number>();

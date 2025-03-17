@@ -4,19 +4,19 @@ import { patchState, signalStore, withHooks, withMethods, withState } from '@ngr
 import { ApplicationErrorDto } from '../info-display/error.dto';
 import { checkIfKnownError } from '../info-display/utility';
 
-import { CategoryDto, NewCategoryDto } from './category.dto';
+import { CategoryEntryDto, CategoryNodeDto, NewCategoryDto } from './category.dto';
 import { CategoryService } from './category.service';
 
 type CategoriesState = {
-  rootCategory: CategoryDto | null;
-  categoryNames: string[];
+  rootCategoryNode: CategoryNodeDto | null;
+  categoryList: CategoryEntryDto[];
   error: ApplicationErrorDto | null;
   isLoading: boolean;
 };
 
 const initialState: CategoriesState = {
-  rootCategory: null,
-  categoryNames: [],
+  rootCategoryNode: null,
+  categoryList: [],
   error: null,
   isLoading: false,
 };
@@ -28,9 +28,9 @@ export const CategoriesStore = signalStore(
     async loadAll() {
       patchState(store, { isLoading: true });
       try {
-        const rootCategory = await categoryService.getAll();
-        const categoryNames = await categoryService.getAllNames();
-        patchState(store, { rootCategory, categoryNames, isLoading: false });
+        const rootCategoryNode = await categoryService.getRootNode();
+        const categoryList = await categoryService.getList();
+        patchState(store, { rootCategoryNode: rootCategoryNode, categoryList, isLoading: false });
       } catch (error) {
         patchState(store, {
           error: checkIfKnownError(error),
@@ -41,8 +41,9 @@ export const CategoriesStore = signalStore(
     async create(newCategoryDto: NewCategoryDto) {
       patchState(store, { isLoading: true });
       try {
-        const rootCategory = await categoryService.add(newCategoryDto);
-        patchState(store, { rootCategory, isLoading: false });
+        await categoryService.add(newCategoryDto);
+        const rootCategoryNode = await categoryService.getRootNode();
+        patchState(store, { rootCategoryNode, isLoading: false });
       } catch (error) {
         patchState(store, {
           error: checkIfKnownError(error),
@@ -53,8 +54,9 @@ export const CategoriesStore = signalStore(
     async delete(categoryId: number) {
       patchState(store, { isLoading: true });
       try {
-        const rootCategory = await categoryService.remove(categoryId);
-        patchState(store, { rootCategory, isLoading: false });
+        await categoryService.remove(categoryId);
+        const rootCategoryNode = await categoryService.getRootNode();
+        patchState(store, { rootCategoryNode, isLoading: false });
       } catch (error) {
         patchState(store, {
           error: checkIfKnownError(error),
