@@ -1,8 +1,9 @@
-use crate::categories::data::{Category, CategoryNode};
+use crate::categories::data::{CategoryNode, CategoryRecord};
 use std::collections::HashMap;
 
-pub fn build_category_tree(categories: Vec<Category>) -> CategoryNode {
-    let mut parent_to_children_categories: HashMap<Option<i32>, Vec<Category>> = HashMap::new();
+pub fn build_category_tree(categories: Vec<CategoryRecord>) -> CategoryNode {
+    let mut parent_to_children_categories: HashMap<Option<i32>, Vec<CategoryRecord>> =
+        HashMap::new();
     for category in categories {
         parent_to_children_categories
             .entry(category.parent_id)
@@ -18,8 +19,8 @@ pub fn build_category_tree(categories: Vec<Category>) -> CategoryNode {
 }
 
 fn build_node(
-    category: &Category,
-    parent_to_children_categories: &HashMap<Option<i32>, Vec<Category>>,
+    category: &CategoryRecord,
+    parent_to_children_categories: &HashMap<Option<i32>, Vec<CategoryRecord>>,
 ) -> CategoryNode {
     let child_categories = parent_to_children_categories
         .get(&Some(category.id))

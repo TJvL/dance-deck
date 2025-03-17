@@ -1,8 +1,8 @@
-use std::sync::Mutex;
-use tauri::{command, State};
 use crate::dances::data::{Dance, NewDance};
 use crate::error::ApplicationError;
 use crate::setup::Database;
+use std::sync::Mutex;
+use tauri::{State, command};
 
 #[command]
 pub fn get_all_dances(state: State<'_, Mutex<Database>>) -> Result<Vec<Dance>, ApplicationError> {

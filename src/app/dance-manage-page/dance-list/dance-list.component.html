@@ -84,7 +84,7 @@
   </table>
 
   <datalist id="categories">
-    @for (categoryName of categoriesStore.categoryNames(); track categoryName) {
+    @for (categoryName of categoriesStore.categoryList(); track categoryName) {
       <option [value]="categoryName"></option>
     }
   </datalist>
