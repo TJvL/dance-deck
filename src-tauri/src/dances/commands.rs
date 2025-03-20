@@ -1,9 +1,9 @@
 use crate::dances::data::{DanceEntry, NewDanceRecord};
 use crate::error::ApplicationError;
 use crate::schema::categories::dsl::{categories, name as category_name};
-use crate::schema::dances::dsl::{dances, name as dance_name, synonyms as dance_synonyms};
+use crate::schema::dances::dsl::{dances, id, name as dance_name, synonyms as dance_synonyms};
 use crate::setup::Database;
-use diesel::{QueryDsl, RunQueryDsl};
+use diesel::{ExpressionMethods, QueryDsl, RunQueryDsl, delete, insert_into};
 use std::sync::Mutex;
 use tauri::{State, command};
 
@@ -47,7 +47,15 @@ pub fn add_dance(
     state: State<'_, Mutex<Database>>,
     new_dance: NewDanceRecord,
 ) -> Result<(), ApplicationError> {
-    unimplemented!()
+    let mut database = state
+        .lock()
+        .map_err(|e| ApplicationError::MutexLock(e.to_string()))?;
+
+    insert_into(dances)
+        .values(&new_dance)
+        .execute(&mut database.connection)?;
+
+    Ok(())
 }
 
 #[command]
@@ -55,5 +63,11 @@ pub fn remove_dance(
     state: State<'_, Mutex<Database>>,
     dance_id: i32,
 ) -> Result<(), ApplicationError> {
-    unimplemented!()
+    let mut database = state
+        .lock()
+        .map_err(|e| ApplicationError::MutexLock(e.to_string()))?;
+
+    delete(dances.filter(id.eq(dance_id))).execute(&mut database.connection)?;
+
+    Ok(())
 }

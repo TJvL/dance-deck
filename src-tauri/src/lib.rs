@@ -1,9 +1,9 @@
 use crate::categories::commands::{
     add_category, get_all_categories, get_category_root_node, remove_category,
 };
+use crate::dances::commands::{add_dance, get_all_dances, remove_dance};
 use setup::setup;
 use tauri::{Builder, generate_context, generate_handler};
-use crate::dances::commands::{add_dance, get_all_dances, remove_dance};
 
 mod categories;
 mod dances;
@@ -32,7 +32,7 @@ pub fn run() {
             get_category_root_node,
             remove_category,
             get_all_categories,
-            //get_all_dances,
+            get_all_dances,
             add_dance,
             remove_dance,
         ])

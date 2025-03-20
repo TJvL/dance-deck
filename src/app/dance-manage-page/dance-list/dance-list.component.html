@@ -1,8 +1,13 @@
 <div class="px-2 py-2 w-full">
   <div class="w-1/3 p-2">
     <div class="flex items-center space-x-2">
-      <input type="text" placeholder="New display name" class="border rounded w-full px-2 py-1" />
-      <button class="bg-gray-200 hover:bg-gray-300 rounded px-2 py-1" title="Add Display Name">
+      <input
+        type="text"
+        placeholder="New display name"
+        class="border rounded w-full px-2 py-1"
+        [(ngModel)]="newDanceName"
+      />
+      <button class="bg-gray-200 hover:bg-gray-300 rounded px-2 py-1" title="Add Display Name" (click)="addDance()">
         <fa-icon [icon]="plusIcon" class="fa-fw"></fa-icon>
       </button>
     </div>
@@ -17,7 +22,7 @@
       </tr>
     </thead>
     <tbody>
-      @for (dance of dancesStore.dances(); track dance.displayName) {
+      @for (dance of dancesStore.dances(); track dance.name) {
         <tr class="border-b border-black">
           <td class="p-2 border-r border-black align-top relative">
             <div class="absolute top-2 -left-12">
@@ -26,13 +31,7 @@
               </button>
             </div>
 
-            <input
-              id="displayName"
-              name="displayName"
-              type="text"
-              [(ngModel)]="dance.displayName"
-              class="border rounded w-full px-2 py-1"
-            />
+            <input id="name" name="name" type="text" [(ngModel)]="dance.name" class="border rounded w-full px-2 py-1" />
           </td>
 
           <td class="p-2 border-r border-black align-top">

@@ -18,4 +18,14 @@ export class DanceListComponent {
 
   readonly categoriesStore = inject(CategoriesStore);
   readonly dancesStore = inject(DancesStore);
+
+  newDanceName = '';
+
+  addDance() {
+    this.dancesStore.create({
+      name: this.newDanceName,
+      category_id: 1,
+      synonyms: [],
+    });
+  }
 }

@@ -4,25 +4,11 @@ use crate::error::ApplicationError;
 use crate::schema::categories::dsl::categories;
 use crate::schema::categories::id;
 use crate::setup::Database;
-use diesel::ExpressionMethods;
 use diesel::QueryDsl;
+use diesel::{ExpressionMethods, insert_into};
 use diesel::{RunQueryDsl, delete};
 use std::sync::Mutex;
 use tauri::{State, command};
-
-#[command]
-pub fn get_category_root_node(
-    state: State<'_, Mutex<Database>>,
-) -> Result<CategoryNode, ApplicationError> {
-    let mut database = state
-        .lock()
-        .map_err(|poison_error| ApplicationError::MutexLock(poison_error.to_string()))?;
-
-    let category_list = categories.load::<CategoryRecord>(&mut database.connection)?;
-    let category_root = build_category_tree(category_list);
-
-    Ok(category_root)
-}
 
 #[command]
 pub fn get_all_categories(
@@ -45,6 +31,20 @@ pub fn get_all_categories(
 }
 
 #[command]
+pub fn get_category_root_node(
+    state: State<'_, Mutex<Database>>,
+) -> Result<CategoryNode, ApplicationError> {
+    let mut database = state
+        .lock()
+        .map_err(|poison_error| ApplicationError::MutexLock(poison_error.to_string()))?;
+
+    let category_list = categories.load::<CategoryRecord>(&mut database.connection)?;
+    let category_root = build_category_tree(category_list);
+
+    Ok(category_root)
+}
+
+#[command]
 pub fn add_category(
     state: State<'_, Mutex<Database>>,
     new_category: NewCategoryRecord,
@@ -53,7 +53,7 @@ pub fn add_category(
         .lock()
         .map_err(|poison_error| ApplicationError::MutexLock(poison_error.to_string()))?;
 
-    diesel::insert_into(categories)
+    insert_into(categories)
         .values(&new_category)
         .execute(&mut database.connection)?;
 
