@@ -4,7 +4,7 @@ import { patchState, signalStore, withHooks, withMethods, withState } from '@ngr
 import { ApplicationErrorDto } from '../info-display/error.dto';
 import { checkIfKnownError } from '../info-display/utility';
 
-import { DanceEntryDto, NewDanceRecordDto } from './dance.dto';
+import { DanceEntryDto, NewDanceRecordDto, NewSynonymRecordDto } from './dance.dto';
 import { DanceService } from './dance.service';
 
 type DancesState = {
@@ -39,7 +39,8 @@ export const DancesStore = signalStore(
       patchState(store, { isLoading: true });
       try {
         await danceService.add(newDanceRecord);
-        patchState(store, { isLoading: false });
+        const dances = await danceService.getList();
+        patchState(store, { dances, isLoading: false });
       } catch (error) {
         patchState(store, {
           error: checkIfKnownError(error),
@@ -48,9 +49,37 @@ export const DancesStore = signalStore(
       }
     },
     async delete(danceId: number) {
+      patchState(store, { isLoading: true });
       try {
         await danceService.remove(danceId);
-        patchState(store, { isLoading: false });
+        const dances = await danceService.getList();
+        patchState(store, { dances, isLoading: false });
+      } catch (error) {
+        patchState(store, {
+          error: checkIfKnownError(error),
+          isLoading: false,
+        });
+      }
+    },
+    async addSynonym(newSynonymRecord: NewSynonymRecordDto) {
+      patchState(store, { isLoading: true });
+      try {
+        await danceService.addSynonym(newSynonymRecord);
+        const dances = await danceService.getList();
+        patchState(store, { dances, isLoading: false });
+      } catch (error) {
+        patchState(store, {
+          error: checkIfKnownError(error),
+          isLoading: false,
+        });
+      }
+    },
+    async deleteSynonym(synonymId: number) {
+      patchState(store, { isLoading: true });
+      try {
+        await danceService.removeSynonym(synonymId);
+        const dances = await danceService.getList();
+        patchState(store, { dances, isLoading: false });
       } catch (error) {
         patchState(store, {
           error: checkIfKnownError(error),

@@ -1,7 +1,9 @@
 use crate::categories::commands::{
     add_category, get_all_categories, get_category_root_node, remove_category,
 };
-use crate::dances::commands::{add_dance, get_all_dances, remove_dance};
+use crate::dances::commands::{
+    add_dance, add_synonym, get_all_dances, remove_dance, remove_synonym,
+};
 use setup::setup;
 use tauri::{Builder, generate_context, generate_handler};
 
@@ -35,6 +37,8 @@ pub fn run() {
             get_all_dances,
             add_dance,
             remove_dance,
+            add_synonym,
+            remove_synonym,
         ])
         .run(generate_context!())
         .expect("error while running application");

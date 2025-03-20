@@ -22,10 +22,25 @@ export class DanceListComponent {
   newDanceName = '';
 
   addDance() {
+    this.newDanceName = '';
     this.dancesStore.create({
       name: this.newDanceName,
-      category_id: 1,
-      synonyms: [],
+      categoryId: 1,
     });
+  }
+
+  removeDance(danceId: number) {
+    this.dancesStore.delete(danceId);
+  }
+
+  addSynonym(danceId: number, name: string) {
+    this.dancesStore.addSynonym({
+      name,
+      danceId,
+    });
+  }
+
+  removeSynonym(synonymId: number) {
+    this.dancesStore.deleteSynonym(synonymId);
   }
 }

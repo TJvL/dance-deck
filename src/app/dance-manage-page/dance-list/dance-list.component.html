@@ -22,11 +22,15 @@
       </tr>
     </thead>
     <tbody>
-      @for (dance of dancesStore.dances(); track dance.name) {
+      @for (dance of dancesStore.dances(); track dance.id) {
         <tr class="border-b border-black">
           <td class="p-2 border-r border-black align-top relative">
             <div class="absolute top-2 -left-12">
-              <button class="bg-gray-200 hover:bg-gray-300 rounded px-2 py-1" title="Remove Dance">
+              <button
+                class="bg-gray-200 hover:bg-gray-300 rounded px-2 py-1"
+                title="Remove Dance"
+                (click)="removeDance(dance.id)"
+              >
                 <fa-icon [icon]="trashIcon" class="fa-fw"></fa-icon>
               </button>
             </div>
@@ -49,28 +53,37 @@
           <td class="p-2 border-r border-black align-top">
             <div class="flex items-center space-x-2">
               <input
+                #newSynonymInput
                 id="newSynonym"
                 name="newSynonym"
                 type="text"
                 placeholder="New synonym"
                 class="border rounded w-full px-2 py-1"
               />
-              <button class="bg-gray-200 hover:bg-gray-300 rounded px-2 py-1" title="Add Synonym">
+              <button
+                class="bg-gray-200 hover:bg-gray-300 rounded px-2 py-1"
+                title="Add Synonym"
+                (click)="addSynonym(dance.id, newSynonymInput.value)"
+              >
                 <fa-icon [icon]="plusIcon" class="fa-fw"></fa-icon>
               </button>
             </div>
 
             <div class="mt-2 flex flex-col space-y-2">
-              @for (synonym of dance.synonyms; track synonym) {
+              @for (synonym of dance.synonyms; track synonym.id) {
                 <div class="flex items-center space-x-2">
                   <input
                     id="synonym"
                     name="synonym"
                     type="text"
-                    [(ngModel)]="dance.synonyms[$index]"
+                    [(ngModel)]="synonym.name"
                     class="border rounded w-full px-2 py-1"
                   />
-                  <button class="bg-gray-200 hover:bg-gray-300 rounded px-2 py-1" title="Remove Synonym">
+                  <button
+                    class="bg-gray-200 hover:bg-gray-300 rounded px-2 py-1"
+                    title="Remove Synonym"
+                    (click)="removeSynonym(synonym.id)"
+                  >
                     <fa-icon [icon]="trashIcon" class="fa-fw"></fa-icon>
                   </button>
                 </div>

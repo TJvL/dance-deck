@@ -12,11 +12,23 @@ diesel::table! {
     dances (id) {
         id -> Integer,
         name -> Text,
-        synonyms -> Nullable<Text>,
         category_id -> Integer,
     }
 }
 
-diesel::joinable!(dances -> categories (category_id));
+diesel::table! {
+    synonyms (id) {
+        id -> Integer,
+        name -> Text,
+        dance_id -> Integer,
+    }
+}
 
-diesel::allow_tables_to_appear_in_same_query!(categories, dances,);
+diesel::joinable!(dances -> categories (category_id));
+diesel::joinable!(synonyms -> dances (dance_id));
+
+diesel::allow_tables_to_appear_in_same_query!(
+    categories,
+    dances,
+    synonyms,
+);

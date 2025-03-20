@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { invoke } from '@tauri-apps/api/core';
 
-import { DanceEntryDto, NewDanceRecordDto } from './dance.dto';
+import { DanceEntryDto, NewDanceRecordDto, NewSynonymRecordDto } from './dance.dto';
 
 @Injectable({
   providedIn: 'root',
@@ -19,5 +19,13 @@ export class DanceService {
 
   async remove(danceId: number) {
     return await invoke<void>('remove_dance', { danceId });
+  }
+
+  async addSynonym(newSynonymRecord: NewSynonymRecordDto) {
+    return await invoke<void>('add_synonym', { newSynonym: newSynonymRecord });
+  }
+
+  async removeSynonym(synonymId: number) {
+    return await invoke<void>('remove_synonym', { synonymId });
   }
 }
