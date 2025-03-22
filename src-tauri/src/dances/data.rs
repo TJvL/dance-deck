@@ -4,8 +4,8 @@ use serde::{Deserialize, Serialize};
 #[derive(Debug, Deserialize, Insertable)]
 #[serde(rename_all = "camelCase")]
 #[diesel(table_name = crate::schema::dances)]
-pub struct NewDanceRecord {
-    pub name: String,
+pub struct NewDanceRecord<'a> {
+    pub name: &'a str,
     pub category_id: i32,
 }
 
@@ -15,14 +15,14 @@ pub struct DanceEntry {
     pub id: i32,
     pub name: String,
     pub category: String,
-    pub synonyms: Vec<String>,
+    pub synonyms: Vec<SynonymEntry>,
 }
 
 #[derive(Debug, Deserialize, Insertable)]
 #[serde(rename_all = "camelCase")]
 #[diesel(table_name = crate::schema::synonyms)]
-pub struct NewSynonymRecord {
-    pub name: String,
+pub struct NewSynonymRecord<'a> {
+    pub name: &'a str,
     pub dance_id: i32,
 }
 

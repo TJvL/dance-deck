@@ -22,22 +22,23 @@ export class DanceListComponent {
   newDanceName = '';
 
   addDance() {
-    this.newDanceName = '';
     this.dancesStore.create({
       name: this.newDanceName,
       categoryId: 1,
     });
+    this.newDanceName = '';
   }
 
   removeDance(danceId: number) {
     this.dancesStore.delete(danceId);
   }
 
-  addSynonym(danceId: number, name: string) {
-    this.dancesStore.addSynonym({
-      name,
+  addSynonym(danceId: number, input: HTMLInputElement) {
+    this.dancesStore.createSynonym({
+      name: input.value,
       danceId,
     });
+    input.value = '';
   }
 
   removeSynonym(synonymId: number) {

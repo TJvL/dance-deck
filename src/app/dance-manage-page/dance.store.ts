@@ -61,7 +61,7 @@ export const DancesStore = signalStore(
         });
       }
     },
-    async addSynonym(newSynonymRecord: NewSynonymRecordDto) {
+    async createSynonym(newSynonymRecord: NewSynonymRecordDto) {
       patchState(store, { isLoading: true });
       try {
         await danceService.addSynonym(newSynonymRecord);

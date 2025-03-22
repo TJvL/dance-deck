@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { CategoryNodeDto, NewCategoryDto } from '../../category.dto';
@@ -10,19 +10,24 @@ import { CategoryNodeDto, NewCategoryDto } from '../../category.dto';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CategoryTreeNodeComponent {
-  @Input() category!: CategoryNodeDto;
+  readonly category = input<CategoryNodeDto>({
+    id: 0,
+    parentId: 0,
+    name: '',
+    childCategories: [],
+  });
 
-  @Output() onAdd = new EventEmitter<NewCategoryDto>();
-  @Output() onRemove = new EventEmitter<number>();
+  readonly onAdd = output<NewCategoryDto>();
+  readonly onRemove = output<number>();
 
   newSubcategoryName = '';
 
   addSubcategory() {
-    this.onAdd.emit({ name: this.newSubcategoryName, parentId: this.category.id });
+    this.onAdd.emit({ name: this.newSubcategoryName, parentId: this.category().id });
     this.newSubcategoryName = '';
   }
 
   removeSubcategory() {
-    this.onRemove.emit(this.category.id);
+    this.onRemove.emit(this.category().id);
   }
 }

@@ -1,8 +1,6 @@
-use crate::dances::data::{DanceEntry, NewDanceRecord, NewSynonymRecord};
+use crate::dances::data::{DanceEntry, NewDanceRecord, NewSynonymRecord, SynonymEntry};
 use crate::error::ApplicationError;
-use crate::schema::categories::dsl::{
-    categories as categories_table, id as category_id_field, name as category_name_field,
-};
+use crate::schema::categories::dsl::{categories as categories_table, name as category_name_field};
 use crate::schema::dances::dsl::{
     dances as dances_table, id as dance_id_field, name as dance_name_field,
 };
@@ -28,7 +26,7 @@ pub fn get_all_dances(
         .map_err(|e| ApplicationError::MutexLock(e.to_string()))?;
 
     let results = dances_table
-        .inner_join(categories_table.on(category_id_field.eq(dance_id_field)))
+        .inner_join(categories_table)
         .left_join(synonyms_table.on(synonym_dance_id_field.eq(dance_id_field)))
         .select((
             dance_id_field,
@@ -39,24 +37,31 @@ pub fn get_all_dances(
         ))
         .load::<(i32, String, String, Option<i32>, Option<String>)>(&mut db.connection)?;
 
-    let mut map: HashMap<i32, (String, String, Vec<String>)> = HashMap::new();
-    for (d_id, d_name, c_name, _syn_id, syn_opt) in results {
-        let entry = map
-            .entry(d_id)
-            .or_insert((d_name.clone(), c_name.clone(), Vec::new()));
-        if let Some(syn) = syn_opt {
-            entry.2.push(syn);
+    let mut map: HashMap<i32, (String, String, Vec<SynonymEntry>)> = HashMap::new();
+    for (dance_id, dance_name, category_name, optional_synonym_id, optional_synonym_name) in results
+    {
+        let entry =
+            map.entry(dance_id)
+                .or_insert((dance_name.clone(), category_name.clone(), Vec::new()));
+        if let (Some(synonym_id), Some(synonym_name)) = (optional_synonym_id, optional_synonym_name)
+        {
+            entry.2.push(SynonymEntry {
+                id: synonym_id,
+                name: synonym_name,
+            });
         }
     }
 
     let dance_entries = map
         .into_iter()
-        .map(|(id, (name, category, synonyms))| DanceEntry {
-            id,
-            name,
-            category,
-            synonyms,
-        })
+        .map(
+            |(dance_id, (dance_name, category_name, synonyms))| DanceEntry {
+                id: dance_id,
+                name: dance_name,
+                category: category_name,
+                synonyms,
+            },
+        )
         .collect();
 
     Ok(dance_entries)
@@ -117,7 +122,8 @@ pub fn remove_synonym(
         .lock()
         .map_err(|e| ApplicationError::MutexLock(e.to_string()))?;
 
-    delete(synonyms_table.filter(synonym_id_field.eq(synonym_id))).execute(&mut database.connection)?;
+    delete(synonyms_table.filter(synonym_id_field.eq(synonym_id)))
+        .execute(&mut database.connection)?;
 
     Ok(())
 }
