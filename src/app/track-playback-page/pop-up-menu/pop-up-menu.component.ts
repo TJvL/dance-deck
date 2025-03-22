@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, HostListener, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faBars, faBook, faPeopleArrows, faList } from '@fortawesome/free-solid-svg-icons';
@@ -7,6 +7,7 @@ import { faBars, faBook, faPeopleArrows, faList } from '@fortawesome/free-solid-
   selector: 'app-pop-up-menu',
   imports: [FontAwesomeModule],
   templateUrl: './pop-up-menu.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PopUpMenuComponent {
   readonly barsIcon = faBars;

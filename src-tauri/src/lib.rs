@@ -9,6 +9,7 @@ use tauri::{Builder, generate_context, generate_handler};
 
 mod categories;
 mod dances;
+mod tracks;
 mod error;
 mod migration;
 mod schema;

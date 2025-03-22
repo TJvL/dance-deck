@@ -6,7 +6,6 @@ import { faPlay, faPause, faStepBackward, faStepForward } from '@fortawesome/fre
   selector: 'app-track-control',
   imports: [FontAwesomeModule],
   templateUrl: './track-control.component.html',
-  styleUrl: './track-control.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TrackControlComponent {

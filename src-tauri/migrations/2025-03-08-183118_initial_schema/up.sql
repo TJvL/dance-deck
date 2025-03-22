@@ -18,7 +18,7 @@ CREATE TABLE dances
     FOREIGN KEY (category_id) REFERENCES categories (id)
 );
 
-CREATE INDEX idx_dances_name ON dances (name);
+CREATE UNIQUE INDEX idx_dances_name ON dances (name);
 
 CREATE TABLE synonyms
 (
@@ -28,4 +28,20 @@ CREATE TABLE synonyms
     FOREIGN KEY (dance_id) REFERENCES dances (id)
 );
 
-CREATE INDEX idx_synonyms_name ON synonyms (name);
+CREATE UNIQUE INDEX idx_synonyms_name ON synonyms (name);
+
+CREATE TABLE artists
+(
+    id   INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL
+);
+
+CREATE TABLE tracks
+(
+    id        INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    title     TEXT NOT NULL,
+    artist_id INTEGER NOT NULL,
+    dance_id  INTEGER NOT NULL,
+    FOREIGN KEY (artist_id) REFERENCES artists (id),
+    FOREIGN KEY (dance_id) REFERENCES dances (id)
+);

@@ -2,9 +2,9 @@ import { Routes } from '@angular/router';
 
 export const routes: Routes = [
   {
-    path: 'playback-page',
+    path: 'track-playback-page',
     loadComponent: () =>
-      import('./playback-page/playback-page.component').then((module) => module.PlaybackPageComponent),
+      import('./track-playback-page/track-playback-page.component').then((module) => module.TrackPlaybackPageComponent),
   },
   {
     path: 'library-manage-page',
@@ -24,8 +24,15 @@ export const routes: Routes = [
       ),
   },
   {
+    path: 'application-settings-page',
+    loadComponent: () =>
+      import('./application-settings-page/application-settings-page.component').then(
+        (module) => module.ApplicationSettingsPageComponent
+      ),
+  },
+  {
     path: '',
-    redirectTo: '/playback-page',
+    redirectTo: '/track-playback-page',
     pathMatch: 'full',
   },
 ];

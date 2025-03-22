@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { faFolder } from '@fortawesome/free-solid-svg-icons';
 
@@ -6,7 +6,7 @@ import { faFolder } from '@fortawesome/free-solid-svg-icons';
   selector: 'app-library-path-configurator',
   imports: [FaIconComponent],
   templateUrl: './library-path-configurator.component.html',
-  styleUrl: './library-path-configurator.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LibraryPathConfiguratorComponent {
   readonly folderIcon = faFolder;
