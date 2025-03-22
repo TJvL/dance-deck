@@ -5,20 +5,42 @@ use crate::dances::commands::{
     add_dance, add_synonym, get_all_dances, remove_dance, remove_synonym,
 };
 use setup::setup;
-use tauri::{Builder, generate_context, generate_handler};
+use tauri::{Builder, Manager, generate_context, generate_handler};
+use tauri_plugin_prevent_default::Flags;
 
 mod categories;
 mod dances;
-mod tracks;
 mod error;
 mod migration;
 mod schema;
 pub mod setup;
+mod tracks;
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     Builder::default()
         .setup(setup)
+        .plugin(
+            tauri_plugin_prevent_default::Builder::new()
+                .with_flags(
+                    Flags::CONTEXT_MENU
+                        | Flags::PRINT
+                        | Flags::DOWNLOADS
+                        | Flags::RELOAD
+                        | Flags::FIND
+                        | Flags::DEV_TOOLS
+                        | Flags::OPEN
+                        | Flags::FOCUS_MOVE
+                        | Flags::SOURCE,
+                )
+                .build(),
+        )
+        .plugin(tauri_plugin_single_instance::init(|app, _args, _cwd| {
+            let _ = app
+                .get_webview_window("main")
+                .expect("no main window")
+                .set_focus();
+        }))
         .plugin(tauri_plugin_opener::init())
         .plugin(tauri_plugin_dialog::init())
         .plugin(

@@ -17,5 +17,13 @@ pub fn setup(application: &mut App) -> Result<(), Box<dyn Error>> {
     let database = Database { connection };
     application.manage(Mutex::new(database));
 
+    #[cfg(debug_assertions)]
+    {
+        let window = application
+            .get_webview_window("main")
+            .expect("no main window");
+        window.open_devtools();
+    }
+
     Ok(())
 }
