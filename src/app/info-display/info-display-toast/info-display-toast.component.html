@@ -1,0 +1,10 @@
+@let applicationError = errorStore.applicationError();
+@if (applicationError) {
+  <div
+    role="presentation"
+    class="fixed bottom-4 left-1/2 p-4 rounded shadow-lg text-white transform -translate-x-1/2"
+    [ngClass]="[applicationError.kind === 'unexpected' ? 'bg-red-600' : 'bg-yellow-500', animationClass]"
+  >
+    <span class="message">{{ applicationError.message }}</span>
+  </div>
+}

@@ -1,6 +1,8 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { faFolder } from '@fortawesome/free-solid-svg-icons';
+
+import { LibraryStore } from '../library.store';
 
 @Component({
   selector: 'app-library-path-configurator',
@@ -10,4 +12,10 @@ import { faFolder } from '@fortawesome/free-solid-svg-icons';
 })
 export class LibraryPathConfiguratorComponent {
   readonly folderIcon = faFolder;
+
+  readonly libraryStore = inject(LibraryStore);
+
+  async setLibraryRoot() {
+    await this.libraryStore.chooseLibraryRoot();
+  }
 }

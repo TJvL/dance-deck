@@ -1,9 +1,9 @@
 use crate::categories::data::{CategoryEntry, CategoryNode, CategoryRecord, NewCategoryRecord};
 use crate::categories::tree::build_category_tree;
 use crate::error::ApplicationError;
+use crate::global::Database;
 use crate::schema::categories::dsl::categories;
 use crate::schema::categories::id;
-use crate::setup::Database;
 use diesel::QueryDsl;
 use diesel::{ExpressionMethods, insert_into};
 use diesel::{RunQueryDsl, delete};
@@ -11,7 +11,7 @@ use std::sync::Mutex;
 use tauri::{State, command};
 
 #[command]
-pub fn get_all_categories(
+pub async fn get_all_categories(
     state: State<'_, Mutex<Database>>,
 ) -> Result<Vec<CategoryEntry>, ApplicationError> {
     let mut database = state
@@ -31,7 +31,7 @@ pub fn get_all_categories(
 }
 
 #[command]
-pub fn get_category_root_node(
+pub async fn get_category_root_node(
     state: State<'_, Mutex<Database>>,
 ) -> Result<CategoryNode, ApplicationError> {
     let mut database = state
@@ -45,9 +45,9 @@ pub fn get_category_root_node(
 }
 
 #[command]
-pub fn add_category(
+pub async fn add_category(
     state: State<'_, Mutex<Database>>,
-    new_category: NewCategoryRecord,
+    new_category: NewCategoryRecord<'_>,
 ) -> Result<(), ApplicationError> {
     let mut database = state
         .lock()
@@ -61,7 +61,7 @@ pub fn add_category(
 }
 
 #[command]
-pub fn remove_category(
+pub async fn remove_category(
     state: State<'_, Mutex<Database>>,
     category_id: i32,
 ) -> Result<(), ApplicationError> {

@@ -2,6 +2,7 @@ import { inject } from '@angular/core';
 import { patchState, signalStore, withHooks, withMethods, withState } from '@ngrx/signals';
 
 import { ApplicationErrorDto } from '../info-display/error.dto';
+import { ErrorStore } from '../info-display/error.store';
 import { checkIfKnownError } from '../info-display/utility';
 
 import { CategoryEntryDto, CategoryNodeDto, NewCategoryDto } from './category.dto';
@@ -24,7 +25,7 @@ const initialState: CategoriesState = {
 export const CategoriesStore = signalStore(
   { providedIn: 'root' },
   withState(initialState),
-  withMethods((store, categoryService = inject(CategoryService)) => ({
+  withMethods((store, categoryService = inject(CategoryService), errorStore = inject(ErrorStore)) => ({
     async loadAll() {
       patchState(store, { isLoading: true });
       try {
@@ -32,10 +33,8 @@ export const CategoriesStore = signalStore(
         const categoryList = await categoryService.getList();
         patchState(store, { rootCategoryNode: rootCategoryNode, categoryList, isLoading: false });
       } catch (error) {
-        patchState(store, {
-          error: checkIfKnownError(error),
-          isLoading: false,
-        });
+        errorStore.setError(checkIfKnownError(error));
+        patchState(store, { isLoading: false });
       }
     },
     async create(newCategoryDto: NewCategoryDto) {
@@ -45,10 +44,8 @@ export const CategoriesStore = signalStore(
         const rootCategoryNode = await categoryService.getRootNode();
         patchState(store, { rootCategoryNode, isLoading: false });
       } catch (error) {
-        patchState(store, {
-          error: checkIfKnownError(error),
-          isLoading: false,
-        });
+        errorStore.setError(checkIfKnownError(error));
+        patchState(store, { isLoading: false });
       }
     },
     async delete(categoryId: number) {
@@ -58,10 +55,8 @@ export const CategoriesStore = signalStore(
         const rootCategoryNode = await categoryService.getRootNode();
         patchState(store, { rootCategoryNode, isLoading: false });
       } catch (error) {
-        patchState(store, {
-          error: checkIfKnownError(error),
-          isLoading: false,
-        });
+        errorStore.setError(checkIfKnownError(error));
+        patchState(store, { isLoading: false });
       }
     },
   })),

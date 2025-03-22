@@ -5,5 +5,5 @@ export function isApplicationError(error: any): error is ApplicationErrorDto {
 }
 
 export function checkIfKnownError(error: any): ApplicationErrorDto {
-  return isApplicationError(error) ? error : { message: 'an unexpected error occurred' };
+  return isApplicationError(error) ? error : { message: 'an unexpected error occurred', kind: 'unexpected' };
 }

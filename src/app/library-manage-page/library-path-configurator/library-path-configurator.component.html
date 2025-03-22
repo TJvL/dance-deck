@@ -8,8 +8,13 @@
       type="text"
       placeholder="Path..."
       class="flex-1 border border-black rounded px-2 py-1"
+      [value]="libraryStore.libraryRoot()"
     />
-    <button class="bg-gray-200 hover:bg-gray-300 rounded px-3 py-1 ml-2" title="Select folder">
+    <button
+      class="bg-gray-200 hover:bg-gray-300 rounded px-3 py-1 ml-2"
+      title="Select folder"
+      (click)="setLibraryRoot()"
+    >
       <fa-icon [icon]="folderIcon" class="fa-fw"></fa-icon>
     </button>
   </div>

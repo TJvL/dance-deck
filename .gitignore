@@ -42,5 +42,7 @@ testem.log
 .DS_Store
 Thumbs.db
 
-# Database file
+# Application related
 database.db
+config.toml
+/library

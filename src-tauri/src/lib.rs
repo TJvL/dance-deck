@@ -4,6 +4,7 @@ use crate::categories::commands::{
 use crate::dances::commands::{
     add_dance, add_synonym, get_all_dances, remove_dance, remove_synonym,
 };
+use crate::library::command::{get_library_root, choose_library_root};
 use setup::setup;
 use tauri::{Builder, Manager, generate_context, generate_handler};
 use tauri_plugin_prevent_default::Flags;
@@ -11,9 +12,11 @@ use tauri_plugin_prevent_default::Flags;
 mod categories;
 mod dances;
 mod error;
+pub mod global;
+mod library;
 mod migration;
 mod schema;
-pub mod setup;
+mod setup;
 mod tracks;
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
@@ -62,6 +65,8 @@ pub fn run() {
             remove_dance,
             add_synonym,
             remove_synonym,
+            get_library_root,
+            choose_library_root,
         ])
         .run(generate_context!())
         .expect("error while running application");

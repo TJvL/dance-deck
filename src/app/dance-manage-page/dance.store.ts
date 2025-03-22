@@ -1,7 +1,7 @@
 import { inject } from '@angular/core';
 import { patchState, signalStore, withHooks, withMethods, withState } from '@ngrx/signals';
 
-import { ApplicationErrorDto } from '../info-display/error.dto';
+import { ErrorStore } from '../info-display/error.store';
 import { checkIfKnownError } from '../info-display/utility';
 
 import { DanceEntryDto, NewDanceRecordDto, NewSynonymRecordDto } from './dance.dto';
@@ -9,30 +9,26 @@ import { DanceService } from './dance.service';
 
 type DancesState = {
   dances: DanceEntryDto[];
-  error: ApplicationErrorDto | null;
   isLoading: boolean;
 };
 
 const initialState: DancesState = {
   dances: [],
-  error: null,
   isLoading: false,
 };
 
 export const DancesStore = signalStore(
   { providedIn: 'root' },
   withState(initialState),
-  withMethods((store, danceService = inject(DanceService)) => ({
+  withMethods((store, danceService = inject(DanceService), errorStore = inject(ErrorStore)) => ({
     async loadAll() {
       patchState(store, { isLoading: true });
       try {
         const dances = await danceService.getList();
         patchState(store, { dances, isLoading: false });
       } catch (error) {
-        patchState(store, {
-          error: checkIfKnownError(error),
-          isLoading: false,
-        });
+        errorStore.setError(checkIfKnownError(error));
+        patchState(store, { isLoading: false });
       }
     },
     async create(newDanceRecord: NewDanceRecordDto) {
@@ -42,10 +38,8 @@ export const DancesStore = signalStore(
         const dances = await danceService.getList();
         patchState(store, { dances, isLoading: false });
       } catch (error) {
-        patchState(store, {
-          error: checkIfKnownError(error),
-          isLoading: false,
-        });
+        errorStore.setError(checkIfKnownError(error));
+        patchState(store, { isLoading: false });
       }
     },
     async delete(danceId: number) {
@@ -55,10 +49,8 @@ export const DancesStore = signalStore(
         const dances = await danceService.getList();
         patchState(store, { dances, isLoading: false });
       } catch (error) {
-        patchState(store, {
-          error: checkIfKnownError(error),
-          isLoading: false,
-        });
+        errorStore.setError(checkIfKnownError(error));
+        patchState(store, { isLoading: false });
       }
     },
     async createSynonym(newSynonymRecord: NewSynonymRecordDto) {
@@ -68,10 +60,8 @@ export const DancesStore = signalStore(
         const dances = await danceService.getList();
         patchState(store, { dances, isLoading: false });
       } catch (error) {
-        patchState(store, {
-          error: checkIfKnownError(error),
-          isLoading: false,
-        });
+        errorStore.setError(checkIfKnownError(error));
+        patchState(store, { isLoading: false });
       }
     },
     async deleteSynonym(synonymId: number) {
@@ -81,10 +71,8 @@ export const DancesStore = signalStore(
         const dances = await danceService.getList();
         patchState(store, { dances, isLoading: false });
       } catch (error) {
-        patchState(store, {
-          error: checkIfKnownError(error),
-          isLoading: false,
-        });
+        errorStore.setError(checkIfKnownError(error));
+        patchState(store, { isLoading: false });
       }
     },
   })),

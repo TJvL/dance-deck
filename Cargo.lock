@@ -789,6 +789,7 @@ version = "0.1.0"
 dependencies = [
  "diesel",
  "diesel_migrations",
+ "log",
  "serde",
  "serde_json",
  "tauri",
@@ -799,6 +800,7 @@ dependencies = [
  "tauri-plugin-prevent-default",
  "tauri-plugin-single-instance",
  "thiserror 2.0.12",
+ "toml",
 ]
 
 [[package]]
