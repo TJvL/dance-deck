@@ -1,21 +1,21 @@
 import { inject } from '@angular/core';
 import { patchState, signalStore, withHooks, withMethods, withState } from '@ngrx/signals';
 
-import { ApplicationErrorDto } from '../info-display/error.dto';
 import { ErrorStore } from '../info-display/error.store';
 import { checkIfKnownError } from '../info-display/utility';
 
+import { ImportedTrackDto } from './library.dto';
 import { LibraryService } from './library.service';
 
 type LibraryState = {
+  importedTrackDto: ImportedTrackDto[];
   libraryRoot: string;
-  error: ApplicationErrorDto | null;
   isLoading: boolean;
 };
 
 const initialState: LibraryState = {
+  importedTrackDto: [],
   libraryRoot: '',
-  error: null,
   isLoading: false,
 };
 

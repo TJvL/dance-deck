@@ -12,4 +12,8 @@ export class LibraryService {
   async chooseLibraryRoot() {
     return await invoke<string | null>('choose_library_root');
   }
+
+  async importFolderToLibrary() {
+    return await invoke('get_library_root');
+  }
 }

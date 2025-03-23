@@ -1,3 +1,4 @@
+DROP INDEX IF EXISTS idx_tracks_title;
 DROP TABLE tracks;
 
 DROP TABLE artists;

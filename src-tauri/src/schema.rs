@@ -34,6 +34,7 @@ diesel::table! {
 diesel::table! {
     tracks (id) {
         id -> Integer,
+        file_path -> Text,
         title -> Text,
         artist_id -> Integer,
         dance_id -> Integer,

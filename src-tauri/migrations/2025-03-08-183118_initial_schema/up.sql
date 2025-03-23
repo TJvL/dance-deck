@@ -39,9 +39,12 @@ CREATE TABLE artists
 CREATE TABLE tracks
 (
     id        INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    file_path TEXT NOT NULL,
     title     TEXT NOT NULL,
     artist_id INTEGER NOT NULL,
     dance_id  INTEGER NOT NULL,
     FOREIGN KEY (artist_id) REFERENCES artists (id),
     FOREIGN KEY (dance_id) REFERENCES dances (id)
 );
+
+CREATE INDEX idx_tracks_title ON tracks (title);

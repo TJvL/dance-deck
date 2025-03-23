@@ -1,0 +1,11 @@
+@if (started()) {
+  <div class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
+    <div class="bg-white p-6 rounded shadow-md w-80">
+      <h2 class="text-xl mb-4">Importing...</h2>
+      <div class="w-full bg-gray-300 rounded h-4 mb-2">
+        <div class="bg-blue-500 h-4 rounded" [style.width.%]="progress().percentage"></div>
+      </div>
+      <p class="text-sm">Current file: {{ progress().currentFileName }}</p>
+    </div>
+  </div>
+}

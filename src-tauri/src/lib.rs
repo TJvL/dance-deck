@@ -4,7 +4,7 @@ use crate::categories::commands::{
 use crate::dances::commands::{
     add_dance, add_synonym, get_all_dances, remove_dance, remove_synonym,
 };
-use crate::library::command::{get_library_root, choose_library_root};
+use crate::library::command::{choose_library_root, get_library_root, import_all_tracks};
 use setup::setup;
 use tauri::{Builder, Manager, generate_context, generate_handler};
 use tauri_plugin_prevent_default::Flags;
@@ -44,7 +44,6 @@ pub fn run() {
                 .expect("no main window")
                 .set_focus();
         }))
-        .plugin(tauri_plugin_opener::init())
         .plugin(tauri_plugin_dialog::init())
         .plugin(
             tauri_plugin_log::Builder::new()
@@ -67,6 +66,7 @@ pub fn run() {
             remove_synonym,
             get_library_root,
             choose_library_root,
+            import_all_tracks,
         ])
         .run(generate_context!())
         .expect("error while running application");

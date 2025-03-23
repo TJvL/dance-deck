@@ -18,7 +18,23 @@
       }
     ],
     "security": {
-      "csp": null
+      "csp": null,
+      "capabilities": [
+        {
+          "$schema": "../gen/schemas/desktop-schema.json",
+          "identifier": "default",
+          "description": "Capability for the main window",
+          "windows": [
+            "main"
+          ],
+          "permissions": [
+            "core:default",
+            "log:default",
+            "dialog:allow-open"
+          ],
+          "capabilities": []
+        }
+      ]
     }
   },
   "bundle": {
